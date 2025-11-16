@@ -31,7 +31,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80; // Navigation height
+      const offset = 56; // Navigation height
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -44,51 +44,51 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
-        <div className="flex items-center justify-between h-20">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/20 backdrop-blur-lg border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-3 lg:px-6">
+        <div className="flex items-center justify-between h-14">
           <button 
             onClick={() => scrollToSection('home')}
-            className="flex items-center gap-3 hover-elevate rounded-md px-2 py-1"
+            className="flex items-center gap-1.5 hover-elevate rounded-md px-1.5 py-0.5"
           >
-            <div className="w-10 h-10 rounded-md bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-              <span className="text-white font-bold text-xl">H</span>
+            <div className="w-7 h-7 rounded-md bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+              <span className="text-white font-bold text-sm">H</span>
             </div>
-            <span className="text-white font-bold text-xl">Haditra</span>
+            <span className="text-white font-bold text-base">Haditra</span>
           </button>
 
-          <div className="hidden lg:flex items-center gap-8">
-            {navItems.map((item, index) => (
-              <button
-                key={index}
-                data-testid={`link-nav-${item.label.toLowerCase()}`}
-                className="text-white/80 hover:text-white transition-colors text-sm font-medium hover-elevate px-3 py-2 rounded-md"
-                onClick={() => scrollToSection(item.id)}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-
           <div className="flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-4">
+              {navItems.map((item, index) => (
+                <button
+                  key={index}
+                  data-testid={`link-nav-${item.label.toLowerCase()}`}
+                  className="text-white/80 hover:text-white transition-colors text-sm font-medium hover-elevate px-2 py-1 rounded-md"
+                  onClick={() => scrollToSection(item.id)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
             <Button
               size="icon"
               variant="ghost"
               data-testid="button-language-toggle"
               onClick={() => onLanguageChange(language === 'en' ? 'ar' : 'en')}
-              className="text-white hover:bg-white/10"
+              className="text-white hover:bg-white/10 h-8 w-8"
             >
-              <Globe className="w-5 h-5" />
+              <Globe className="w-4 h-4" />
             </Button>
 
             <Button
               size="icon"
               variant="ghost"
               data-testid="button-menu-toggle"
-              className="lg:hidden text-white hover:bg-white/10"
+              className="lg:hidden text-white hover:bg-white/10 h-8 w-8"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </Button>
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-slate-900 border-t border-white/10"
+            className="lg:hidden bg-slate-900/20 backdrop-blur-lg border-t border-white/10"
           >
             <div className="px-6 py-6 space-y-4">
               {navItems.map((item, index) => (

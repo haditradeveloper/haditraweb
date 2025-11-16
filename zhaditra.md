@@ -50,7 +50,7 @@ Preferred communication style: Simple, everyday language.
   - Footer - Multi-column footer with links
 
 **Asset Management**
-- Static images stored in `attached_assets/` directory
+- Static images stored in `public/` directory
 - Images imported as ES modules and bundled by Vite
 - Generated images for hero slider slides referenced from assets folder
 

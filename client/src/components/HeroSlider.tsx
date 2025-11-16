@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { type Language } from '@/lib/i18n';
 
-import slide1 from '@assets/generated_images/Software_engineering_workspace_52fe8ba5.png';
-import slide2 from '@assets/generated_images/AI_machine_learning_visualization_22a86411.png';
-import slide3 from '@assets/generated_images/Creative_studio_production_setup_196764bc.png';
-import slide4 from '@assets/generated_images/IoT_enterprise_automation_11610dcb.png';
+import slide1 from '@assets/images/hero/Software_engineering_workspace_52fe8ba5.png';
+import slide2 from '@assets/images/hero/AI_machine_learning_visualization_22a86411.png';
+import slide3 from '@assets/images/hero/Creative_studio_production_setup_196764bc.png';
+import slide4 from '@assets/images/hero/IoT_enterprise_automation_11610dcb.png';
 
 interface HeroSliderProps {
   language: Language;
@@ -34,7 +34,7 @@ export default function HeroSlider({ language }: HeroSliderProps) {
 
   useEffect(() => {
     if (!isAutoPlaying) return;
-    const interval = setInterval(nextSlide, 7000);
+    const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [isAutoPlaying, nextSlide]);
 
@@ -173,23 +173,45 @@ export default function HeroSlider({ language }: HeroSliderProps) {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className="flex flex-wrap items-center justify-center gap-4"
               >
-                <Button
-                  size="lg"
-                  data-testid="button-hero-primary"
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-6 text-base"
-                  onClick={() => console.log('Primary CTA clicked')}
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {language === 'en' ? 'View Our Work' : 'شاهد أعمالنا'}
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  data-testid="button-hero-secondary"
-                  className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-6 text-base"
-                  onClick={() => console.log('Secondary CTA clicked')}
+                  <Button
+                    size="lg"
+                    data-testid="button-hero-primary"
+                    className="group relative bg-gradient-to-r from-blue-600 via-blue-600 to-blue-700 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white px-8 py-5 text-base font-semibold rounded-full shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-300 overflow-hidden"
+                    onClick={() => console.log('Primary CTA clicked')}
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      {language === 'en' ? 'View Our Work' : 'شاهد أعمالنا'}
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                    </span>
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.6 }}
+                    />
+                  </Button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {language === 'en' ? 'Start Your Project' : 'ابدأ مشروعك'}
-                </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    data-testid="button-hero-secondary"
+                    className="group relative border-2 border-white/40 text-white hover:border-white/60 hover:bg-white/10 backdrop-blur-md px-8 py-5 text-base font-semibold rounded-full transition-all duration-300 shadow-lg shadow-white/5 hover:shadow-white/10 bg-white/5"
+                    onClick={() => console.log('Secondary CTA clicked')}
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      {language === 'en' ? 'Start Your Project' : 'ابدأ مشروعك'}
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                    </span>
+                  </Button>
+                </motion.div>
               </motion.div>
             </motion.div>
           </AnimatePresence>
