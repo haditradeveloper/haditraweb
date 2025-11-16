@@ -8,6 +8,7 @@ import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
+import ChatbotWidget from '@/components/ChatbotWidget';
 import { type Language } from '@/lib/i18n';
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
       <ContactSection language={language} />
       <CTASection language={language} />
       <Footer language={language} />
+      <ChatbotWidget language={language} />
     </div>
   );
 }
