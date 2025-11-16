@@ -17,10 +17,13 @@ interface Message {
 const getApiUrl = (): string => {
   if (typeof window === 'undefined') return '';
   const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const productionApiUrl = import.meta.env.VITE_API_URL || 'https://haditra-backend.onrender.com';
-  return isDevelopment 
-    ? 'http://localhost:5000/api/chat'
-    : `${productionApiUrl}/api/chat`;
+  
+  if (isDevelopment) {
+    return 'http://localhost:5000/api/chat';
+  }
+  
+  const productionApiUrl = import.meta.env.VITE_API_URL || 'https://haditra.onrender.com';
+  return `${productionApiUrl}/api/chat`;
 };
 
 export default function ChatbotWidget({ language }: ChatbotWidgetProps) {
@@ -77,7 +80,9 @@ export default function ChatbotWidget({ language }: ChatbotWidgetProps) {
           content: msg.text
         }));
 
-      const response = await fetch(getApiUrl(), {
+      const apiUrl = getApiUrl();
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,14 +116,18 @@ export default function ChatbotWidget({ language }: ChatbotWidgetProps) {
       setMessages(prev => [...prev, botResponse]);
     } catch (error: any) {
       const errorMessage = error?.message || 'Unknown error';
-      const isNetworkError = errorMessage.includes('fetch') || errorMessage.includes('network') || errorMessage.includes('Failed');
+      const isNetworkError = errorMessage.includes('fetch') || errorMessage.includes('network') || errorMessage.includes('Failed') || errorMessage.includes('CORS') || errorMessage.includes('ERR_');
+      
+      const apiUrl = getApiUrl();
+      const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const debugInfo = isDev ? `\n\nDebug: ${apiUrl}` : '';
       
       const fallbackResponse: Message = {
         id: (Date.now() + 1).toString(),
         text: isNetworkError
           ? (language === 'en' 
-              ? 'Unable to connect to the server. Please check your connection and try again.'
-              : 'تعذر الاتصال بالخادم. يرجى التحقق من الاتصال والمحاولة مرة أخرى.')
+              ? `Unable to connect to the server. Please check your connection and try again.${debugInfo}`
+              : `تعذر الاتصال بالخادم. يرجى التحقق من الاتصال والمحاولة مرة أخرى.${debugInfo}`)
           : (language === 'en' 
               ? 'I apologize, but I encountered an error. Please try again or contact us directly at info@haditra.com.'
               : 'أعتذر، لكنني واجهت خطأ. يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة على info@haditra.com.'),
