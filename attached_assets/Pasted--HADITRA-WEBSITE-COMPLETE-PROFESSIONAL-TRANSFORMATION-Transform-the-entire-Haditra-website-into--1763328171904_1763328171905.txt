@@ -1,0 +1,948 @@
+# HADITRA WEBSITE - COMPLETE PROFESSIONAL TRANSFORMATION
+
+Transform the entire Haditra website into a premium, professional corporate platform with consistent design, comprehensive i18n support, modern animations, and a refined color palette.
+
+## 🎨 NEW PROFESSIONAL COLOR PALETTE
+
+Replace all existing colors with this cohesive, corporate color system:
+
+### Primary Colors
+- **Primary Dark**: `#0F172A` (Deep Slate - Main headers, important text)
+- **Primary**: `#1E293B` (Slate 800 - Body text)
+- **Primary Light**: `#334155` (Slate 700 - Secondary text)
+
+### Accent Colors
+- **Accent Primary**: `#2563EB` (Blue 600 - Primary buttons, links)
+- **Accent Secondary**: `#3B82F6` (Blue 500 - Hover states, highlights)
+- **Accent Light**: `#60A5FA` (Blue 400 - Subtle accents)
+
+### Background Colors
+- **BG Primary**: `#FFFFFF` (White - Main background)
+- **BG Secondary**: `#F8FAFC` (Slate 50 - Alternate sections)
+- **BG Tertiary**: `#F1F5F9` (Slate 100 - Cards, containers)
+- **BG Dark**: `#0F172A` (Dark sections, footer)
+
+### Text Colors
+- **Text Primary**: `#0F172A` (Main content)
+- **Text Secondary**: `#475569` (Slate 600 - Supporting text)
+- **Text Muted**: `#64748B` (Slate 500 - Captions, meta)
+- **Text Light**: `#94A3B8` (Slate 400 - Disabled, subtle)
+
+### Status Colors
+- **Success**: `#10B981` (Green 500)
+- **Warning**: `#F59E0B` (Amber 500)
+- **Error**: `#EF4444` (Red 500)
+- **Info**: `#3B82F6` (Blue 500)
+
+### Gradient Combinations
+/* Hero Gradients */
+bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700
+bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900
+
+/* Button Gradients */
+bg-gradient-to-r from-blue-600 to-blue-700
+hover:from-blue-700 hover:to-blue-800
+
+/* Card Hover Effects */
+hover:shadow-[0_10px_40px_rgba(37,99,235,0.15)]## 📝 COMPLETE I18N IMPLEMENTATION
+
+### Step 1: Update src/i18n/locales/en.ts
+
+Add ALL missing text strings:
+
+export default {
+  nav: {
+    home: "Home",
+    about: "About Us",
+    software: "Software Solutions",
+    ai: "AI & Technologies",
+    creative: "Creative Studio",
+    portfolio: "Portfolio",
+    contact: "Contact",
+    services: "Services"
+  },
+  
+  hero: {
+    slider: {
+      slide1: {
+        category: "SOFTWARE ENGINEERING EXCELLENCE",
+        title: "Transform Your Vision",
+        subtitle: "Into Digital Reality",
+        description: "Enterprise-grade software solutions including ERP, HRMS, Payment Systems & E-Commerce Platforms",
+        primaryCTA: "View Our Work",
+        secondaryCTA: "Start Your Project"
+      },
+      slide2: {
+        category: "ARTIFICIAL INTELLIGENCE & ML",
+        title: "Powered By Intelligence",
+        subtitle: "Driven By Innovation",
+        description: "Advanced AI solutions with Machine Learning, Predictive Analytics & Smart Systems",
+        primaryCTA: "Discover AI",
+        secondaryCTA: "Schedule Demo"
+      },
+      slide3: {
+        category: "CREATIVE STUDIO SERVICES",
+        title: "Where Technology",
+        subtitle: "Meets Creativity",
+        description: "Professional Photography, Video Production, 3D Animation & AR/VR Development",
+        primaryCTA: "View Work",
+        secondaryCTA: "Start Project"
+      },
+      slide4: {
+        category: "ENTERPRISE AUTOMATION",
+        title: "Automation That",
+        subtitle: "Transforms Business",
+        description: "IoT Integration, Smart Systems & RPA Solutions for Operational Excellence",
+        primaryCTA: "Learn More",
+        secondaryCTA: "Contact Us"
+      }
+    }
+  },
+  
+  stats: {
+    title: "Our Impact",
+    subtitle: "Delivering Excellence Across Industries",
+    projects: {
+      value: "500+",
+      label: "Projects Delivered"
+    },
+    clients: {
+      value: "200+",
+      label: "Happy Clients"
+    },
+    team: {
+      value: "50+",
+      label: "Team Members"
+    },
+    satisfaction: {
+      value: "98%",
+      label: "Client Satisfaction"
+    }
+  },
+  
+  services: {
+    subtitle: "Our Services",
+    title: "Comprehensive Technology & Creative Solutions",
+    description: "From enterprise software to AI-powered systems and professional creative production",
+    software: {
+      title: "Software Engineering",
+      description: "Enterprise-grade custom software solutions including payment systems, ERP, HR systems.",
+      features: {
+        feat1: "Payment Systems",
+        feat2: "ERP & HRMS",
+        feat3: "E-Commerce Platforms"
+      }
+    },
+    ai: {
+      title: "AI & Technologies",
+      description: "Cutting-edge AI, machine learning, IoT systems, and predictive analytics solutions.",
+      features: {
+        feat1: "Machine Learning",
+        feat2: "IoT Integration",
+        feat3: "Smart Systems"
+      }
+    },
+    creative: {
+      title: "Creative Studio",
+      description: "Professional photography, video production, 3D animation, and AR/VR content.",
+      features: {
+        feat1: "Video Production",
+        feat2: "3D Animation",
+        feat3: "Photography"
+      }
+    }
+  },
+  
+  cta: {
+    title: "Ready to Capture Your Story?",
+    subtitle: "Ready to Transform Your Business?",
+    description: "Let's create stunning visual memories together. Book a consultation to discuss your needs.",
+    primaryButton: "Book a Session",
+    secondaryButton: "Explore Portfolio",
+    contactButton: "Contact Us",
+    learnMore: "Learn More"
+  },
+  
+  footer: {
+    brand: "Haditra Studio",
+    tagline: "Photography & Creative",
+    description: "Premium photography and videography services capturing your most precious moments with artistry and excellence.",
+    quickLinks: "Quick Links",
+    services: "Services",
+    contact: "Contact",
+    email: "info@haditra.com",
+    phone: "+971 XX XXX XXXX",
+    location: "Dubai, UAE",
+    copyright: "All rights reserved.",
+    privacyPolicy: "Privacy Policy",
+    termsOfService: "Terms of Service"
+  },
+  
+  common: {
+    loading: "Loading...",
+    language: "Language",
+    viewMore: "View More",
+    readMore: "Read More",
+    getStarted: "Get Started",
+    bookNow: "Book Now",
+    learnMore: "Learn More"
+  }
+};### Step 2: Update ALL Page Components to Use i18n
+
+## 🎬 ANIMATION SYSTEM
+
+Add consistent animations throughout:
+
+### Global Animation Variants
+
+export const fadeInUp = {
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+};
+
+export const fadeIn = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.8 }
+};
+
+export const scaleIn = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+};
+
+export const slideInLeft = {
+  initial: { opacity: 0, x: -40 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+};
+
+export const slideInRight = {
+  initial: { opacity: 0, x: 40 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+};
+
+export const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};## 🔧 COMPONENT UPDATES
+
+### 1. UPDATE src/index.css - New Color Variables
+
+:root {
+  --primary-dark: #0F172A;
+  --primary: #1E293B;
+  --primary-light: #334155;
+  
+  --accent-primary: #2563EB;
+  --accent-secondary: #3B82F6;
+  --accent-light: #60A5FA;
+  
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-tertiary: #F1F5F9;
+  --bg-dark: #0F172A;
+  
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-light: #94A3B8;
+  
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #3B82F6;
+  
+  --radius: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}### 2. UPDATE src/components/HeroSlider.tsx
+
+import { useCallback, useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
+import Fade from 'embla-carousel-fade';
+import { motion, AnimatePresence } from 'motion/react';
+import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from 'lucide-react';
+import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Container } from './ui/Container';
+import { useTranslation } from '../i18n/useTranslation';
+
+export function HeroSlider() {
+  const { t } = useTranslation();
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, duration: 50 },
+    [Fade(), Autoplay({ delay: 7000, stopOnMouseEnter: true })]
+  );
+  
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const slides = [
+    {
+      id: 1,
+      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1920&q=90',
+      ...t('hero.slider.slide1')
+    },
+    {
+      id: 2,
+      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&q=90',
+      ...t('hero.slider.slide2')
+    },
+    {
+      id: 3,
+      image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1920&q=90',
+      ...t('hero.slider.slide3')
+    },
+    {
+      id: 4,
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=90',
+      ...t('hero.slider.slide4')
+    }
+  ];
+
+  const scrollTo = useCallback((index: number) => {
+    if (emblaApi) emblaApi.scrollTo(index);
+  }, [emblaApi]);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on('select', onSelect);
+    onSelect();
+    return () => { emblaApi.off('select', onSelect); };
+  }, [emblaApi]);
+
+  const currentSlide = slides[selectedIndex];
+
+  return (
+    <section className="relative w-full h-screen min-h-screen overflow-hidden bg-primary-dark">
+      <div className="embla absolute inset-0" ref={emblaRef}>
+        <div className="embla__container flex h-full">
+          {slides.map((slide) => (
+            <div key={slide.id} className="embla__slide relative flex-[0_0_100%] min-w-0 h-full">
+              <div className="absolute inset-0 w-full h-full">
+                <ImageWithFallback src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-dark/90 via-blue-900/80 to-primary-dark/90" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-dark via-transparent to-primary-dark/60" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="absolute inset-0 flex items-center justify-center z-20">
+        <Container className="px-6 lg:px-16">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              className="text-center max-w-6xl mx-auto"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="mb-8"
+              >
+                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-accent-primary/20 to-accent-light/20 backdrop-blur-2xl border border-accent-secondary/30 shadow-lg">
+                  <Sparkles className="w-4 h-4 text-accent-light animate-pulse" />
+                  <span className="text-sm lg:text-base text-white tracking-[0.2em] uppercase font-bold">
+                    {currentSlide.category}
+                  </span>
+                </div>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white mb-4 tracking-tight leading-[0.9]"
+                style={{
+                  textShadow: '0 0 60px rgba(37,99,235,0.3), 0 20px 40px rgba(0,0,0,0.6)'
+                }}
+              >
+                {currentSlide.title}
+              </motion.h1>
+
+              <motion.h2
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-slate-100 mb-8 tracking-tight"
+              >
+                {currentSlide.subtitle}
+              </motion.h2>
+
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+                className="text-lg md:text-xl lg:text-2xl text-slate-300 mb-12 max-w-4xl mx-auto leading-relaxed"
+              >
+                {currentSlide.description}
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                className="flex flex-col sm:flex-row gap-5 justify-center"
+              >
+                <a
+                  href="/portfolio"
+                  className="group inline-flex items-center justify-center gap-3 px-10 lg:px-12 py-5 lg:py-6 bg-gradient-to-r from-accent-primary to-accent-secondary text-white rounded-full font-bold text-lg lg:text-xl transition-all duration-500 hover:scale-105 hover:shadow-[0_0_50px_rgba(37,99,235,0.5)] focus:outline-none focus:ring-4 focus:ring-accent-light/50"
+                >
+                  {currentSlide.primaryCTA}
+                  <ArrowRight className="w-5 h-5 lg:w-6 lg:h-6 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a
+                  href="/contact"
+                  className="inline-flex items-center justify-center px-10 lg:px-12 py-5 lg:py-6 border-2 border-white text-white rounded-full font-bold text-lg lg:text-xl backdrop-blur-xl bg-white/5 transition-all duration-500 hover:bg-white hover:text-primary-dark hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50"
+                >
+                  {currentSlide.secondaryCTA}
+                </a>
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
+        </Container>
+      </div>
+
+      <button
+        onClick={scrollPrev}
+        className="absolute left-6 lg:left-12 top-1/2 -translate-y-1/2 z-30 w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-white/10 backdrop-blur-2xl border-2 border-white/30 flex items-center justify-center text-white transition-all duration-500 hover:bg-white hover:text-primary-dark hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/50"
+      >
+        <ChevronLeft className="w-8 h-8" />
+      </button>
+
+      <button
+        onClick={scrollNext}
+        className="absolute right-6 lg:right-12 top-1/2 -translate-y-1/2 z-30 w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-white/10 backdrop-blur-2xl border-2 border-white/30 flex items-center justify-center text-white transition-all duration-500 hover:bg-white hover:text-primary-dark hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/50"
+      >
+        <ChevronRight className="w-8 h-8" />
+      </button>
+
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => scrollTo(index)}
+            className={`transition-all duration-500 rounded-full ${
+              index === selectedIndex
+                ? 'w-16 h-3 bg-white shadow-[0_0_20px_rgba(255,255,255,0.6)]'
+                : 'w-3 h-3 bg-white/40 hover:bg-white/80 hover:scale-125'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}### 3. UPDATE src/pages/Home.tsx - Full i18n Integration
+
+import { motion } from 'motion/react';
+import { HeroSlider } from '../components/HeroSlider';
+import { Container } from '../components/ui/Container';
+import { SectionHeader } from '../components/ui/SectionHeader';
+import { ServiceCard } from '../components/ui/ServiceCard';
+import { CTAButton } from '../components/ui/CTAButton';
+import { Code2, Brain, Camera } from 'lucide-react';
+import { useTranslation } from '../i18n/useTranslation';
+
+export function Home() {
+  const { t } = useTranslation();
+
+  const services = [
+    {
+      icon: <Code2 size={32} className="text-accent-primary" />,
+      title: t('services.software.title'),
+      description: t('services.software.description'),
+      features: [
+        t('services.software.features.feat1'),
+        t('services.software.features.feat2'),
+        t('services.software.features.feat3')
+      ]
+    },
+    {
+      icon: <Brain size={32} className="text-accent-primary" />,
+      title: t('services.ai.title'),
+      description: t('services.ai.description'),
+      features: [
+        t('services.ai.features.feat1'),
+        t('services.ai.features.feat2'),
+        t('services.ai.features.feat3')
+      ]
+    },
+    {
+      icon: <Camera size={32} className="text-accent-primary" />,
+      title: t('services.creative.title'),
+      description: t('services.creative.description'),
+      features: [
+        t('services.creative.features.feat1'),
+        t('services.creative.features.feat2'),
+        t('services.creative.features.feat3')
+      ]
+    }
+  ];
+
+  const stats = [
+    { 
+      value: t('stats.projects.value'), 
+      label: t('stats.projects.label') 
+    },
+    { 
+      value: t('stats.clients.value'), 
+      label: t('stats.clients.label') 
+    },
+    { 
+      value: t('stats.team.value'), 
+      label: t('stats.team.label') 
+    },
+    { 
+      value: t('stats.satisfaction.value'), 
+      label: t('stats.satisfaction.label') 
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-bg-primary">
+      <HeroSlider />
+      
+      <section className="py-20 lg:py-32 bg-white">
+        <Container>
+          <SectionHeader
+            subtitle={t('stats.title')}
+            title={t('stats.subtitle')}
+          />
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={{
+              animate: {
+                transition: {
+                  staggerChildren: 0.1
+                }
+              }
+            }}
+          >
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  initial: { opacity: 0, y: 30 },
+                  animate: { opacity: 1, y: 0 }
+                }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="text-center group"
+              >
+                <div className="text-4xl md:text-5xl lg:text-6xl font-black text-primary-dark mb-3 transition-transform duration-300 group-hover:scale-110">
+                  {stat.value}
+                </div>
+                <div className="text-text-secondary text-sm md:text-base font-medium uppercase tracking-wider">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </Container>
+      </section>
+
+      <section className="py-20 lg:py-32 bg-bg-secondary">
+        <Container>
+          <SectionHeader
+            subtitle={t('services.subtitle')}
+            title={t('services.title')}
+          />
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8 mt-16"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={{
+              animate: {
+                transition: {
+                  staggerChildren: 0.15
+                }
+              }
+            }}
+          >
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  initial: { opacity: 0, y: 40 },
+                  animate: { opacity: 1, y: 0 }
+                }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <ServiceCard
+                  icon={service.icon}
+                  title={service.title}
+                  description={service.description}
+                  features={service.features}
+                  delay={0}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </Container>
+      </section>
+
+      <section className="py-20 lg:py-32 bg-white">
+        <Container>
+          <motion.div 
+            className="bg-gradient-to-br from-bg-secondary to-white rounded-3xl p-12 lg:p-16 shadow-xl border border-slate-200 text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-4">
+              {t('cta.title')}
+            </h2>
+            <p className="text-text-secondary text-lg lg:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+              {t('cta.description')}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-5 justify-center">
+              <CTAButton to="/contact">{t('cta.primaryButton')}</CTAButton>
+              <CTAButton to="/portfolio" variant="secondary">{t('cta.secondaryButton')}</CTAButton>
+            </div>
+          </motion.div>
+        </Container>
+      </section>
+    </div>
+  );
+}### 4. UPDATE src/components/Footer.tsx - Full i18n
+
+import { Container } from './ui/Container';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import { useTranslation } from '../i18n/useTranslation';
+import { Link } from 'react-router-dom';
+
+export function Footer() {
+  const { t } = useTranslation();
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-primary-dark text-slate-300 pt-20 pb-10">
+      <Container>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-xl">H</span>
+              </div>
+              <div>
+                <div className="text-white font-bold text-xl">{t('footer.brand')}</div>
+                <div className="text-xs text-slate-400">{t('footer.tagline')}</div>
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed text-slate-400">
+              {t('footer.description')}
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-white font-semibold mb-6 text-lg">{t('footer.quickLinks')}</h3>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link to="/" className="hover:text-accent-light transition-colors duration-300 inline-flex items-center group">
+                  <span className="w-0 group-hover:w-2 h-0.5 bg-accent-light transition-all duration-300 mr-0 group-hover:mr-2"></span>
+                  {t('nav.home')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-accent-light transition-colors duration-300 inline-flex items-center group">
+                  <span className="w-0 group-hover:w-2 h-0.5 bg-accent-light transition-all duration-300 mr-0 group-hover:mr-2"></span>
+                  {t('nav.about')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/portfolio" className="hover:text-accent-light transition-colors duration-300 inline-flex items-center group">
+                  <span className="w-0 group-hover:w-2 h-0.5 bg-accent-light transition-all duration-300 mr-0 group-hover:mr-2"></span>
+                  {t('nav.portfolio')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-accent-light transition-colors duration-300 inline-flex items-center group">
+                  <span className="w-0 group-hover:w-2 h-0.5 bg-accent-light transition-all duration-300 mr-0 group-hover:mr-2"></span>
+                  {t('nav.contact')}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-white font-semibold mb-6 text-lg">{t('footer.services')}</h3>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link to="/software-solutions" className="hover:text-accent-light transition-colors duration-300 inline-flex items-center group">
+                  <span className="w-0 group-hover:w-2 h-0.5 bg-accent-light transition-all duration-300 mr-0 group-hover:mr-2"></span>
+                  {t('nav.software')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/ai-technologies" className="hover:text-accent-light transition-colors duration-300 inline-flex items-center group">
+                  <span className="w-0 group-hover:w-2 h-0.5 bg-accent-light transition-all duration-300 mr-0 group-hover:mr-2"></span>
+                  {t('nav.ai')}
+                </Link>
+              </li>
+              <li>
+                <Link to="/creative-studio" className="hover:text-accent-light transition-colors duration-300 inline-flex items-center group">
+                  <span className="w-0 group-hover:w-2 h-0.5 bg-accent-light transition-all duration-300 mr-0 group-hover:mr-2"></span>
+                  {t('nav.creative')}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-white font-semibold mb-6 text-lg">{t('footer.contact')}</h3>
+            <ul className="space-y-4 text-sm">
+              <li className="flex items-start gap-3 hover:text-accent-light transition-colors duration-300">
+                <Mail className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent-light" />
+                <a href="mailto:info@haditra.com" className="break-all">{t('footer.email')}</a>
+              </li>
+              <li className="flex items-start gap-3 hover:text-accent-light transition-colors duration-300">
+                <Phone className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent-light" />
+                <a href="tel:+971">{t('footer.phone')}</a>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0 text-accent-light" />
+                <span>{t('footer.location')}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="border-t border-slate-800 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-slate-400">
+              &copy; {currentYear} Haditra Technologies. {t('footer.copyright')}
+            </p>
+            <div className="flex gap-6 text-sm">
+              <Link to="/privacy" className="text-slate-400 hover:text-accent-light transition-colors">
+                {t('footer.privacyPolicy')}
+              </Link>
+              <Link to="/terms" className="text-slate-400 hover:text-accent-light transition-colors">
+                {t('footer.termsOfService')}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </footer>
+  );
+}### 5. UPDATE src/components/ui/CTAButton.tsx
+
+import { Link } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { motion } from 'motion/react';
+
+interface CTAButtonProps {
+  to: string;
+  children: ReactNode;
+  variant?: 'primary' | 'secondary';
+  className?: string;
+}
+
+export function CTAButton({ to, children, variant = 'primary', className = '' }: CTAButtonProps) {
+  const baseStyles = 'inline-flex items-center justify-center px-8 py-4 rounded-full font-bold text-base lg:text-lg transition-all duration-500 focus:outline-none focus:ring-4 min-w-[200px]';
+  
+  const variantStyles = {
+    primary: 'bg-gradient-to-r from-accent-primary to-accent-secondary text-white hover:scale-105 hover:shadow-[0_10px_40px_rgba(37,99,235,0.4)] focus:ring-accent-light/50',
+    secondary: 'border-2 border-primary-dark text-primary-dark hover:bg-primary-dark hover:text-white hover:scale-105 focus:ring-primary-dark/50'
+  };
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <Link
+        to={to}
+        className={`${baseStyles} ${variantStyles[variant]} ${className}`}
+      >
+        {children}
+      </Link>
+    </motion.div>
+  );
+}### 6. UPDATE src/components/ui/ServiceCard.tsx
+
+import { ReactNode } from 'react';
+import { motion } from 'motion/react';
+import { CheckCircle2 } from 'lucide-react';
+
+interface ServiceCardProps {
+  icon: ReactNode;
+  title: string;
+  description: string;
+  features: string[];
+  delay?: number;
+}
+
+export function ServiceCard({ icon, title, description, features, delay = 0 }: ServiceCardProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.6 }}
+      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      className="group bg-white rounded-2xl p-8 border-2 border-slate-200 hover:border-accent-primary hover:shadow-[0_10px_40px_rgba(37,99,235,0.15)] transition-all duration-500"
+    >
+      <div className="w-16 h-16 mb-6 rounded-xl bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10 flex items-center justify-center text-accent-primary group-hover:scale-110 transition-transform duration-500">
+        {icon}
+      </div>
+      
+      <h3 className="text-xl font-bold text-primary-dark mb-4 group-hover:text-accent-primary transition-colors duration-300">
+        {title}
+      </h3>
+      
+      <p className="text-text-secondary mb-6 leading-relaxed">
+        {description}
+      </p>
+      
+      <ul className="space-y-3">
+        {features.map((feature, index) => (
+          <motion.li 
+            key={index}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: delay + (index * 0.1), duration: 0.4 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 text-sm text-text-secondary"
+          >
+            <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0" />
+            <span>{feature}</span>
+          </motion.li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}## 📋 IMPLEMENTATION CHECKLIST
+
+### Phase 1: Setup & Color System
+- [ ] Update src/index.css with new CSS variables
+- [ ] Replace all hardcoded colors across components
+- [ ] Test color consistency across all pages
+- [ ] Verify contrast ratios for accessibility
+
+### Phase 2: i18n Integration
+- [ ] Update all locale files (en, tr, ar, etc.) with complete translations
+- [ ] Replace all hardcoded strings in components with t() calls
+- [ ] Update HeroSlider to use i18n
+- [ ] Update Home page with i18n
+- [ ] Update Footer with i18n
+- [ ] Update Header with i18n
+- [ ] Update all other pages (About, Portfolio, Contact, etc.)
+- [ ] Test language switching
+- [ ] Verify RTL languages work correctly
+
+### Phase 3: Animation System
+- [ ] Add animation variants file
+- [ ] Implement fadeInUp animations on scroll
+- [ ] Add stagger animations for grids
+- [ ] Add hover animations on interactive elements
+- [ ] Add page transition animations
+- [ ] Test animation performance
+- [ ] Ensure animations respect prefers-reduced-motion
+
+### Phase 4: Component Updates
+- [ ] Update all buttons with new styles
+- [ ] Update all cards with hover effects
+- [ ] Update forms with new styling
+- [ ] Add loading states
+- [ ] Add error states
+- [ ] Test all interactive components
+
+### Phase 5: Page Consistency
+- [ ] Ensure all pages use same color palette
+- [ ] Verify consistent spacing/padding
+- [ ] Check typography hierarchy
+- [ ] Test navigation transitions
+- [ ] Verify footer appears consistently
+- [ ] Test responsive behavior
+
+### Phase 6: Final Polish
+- [ ] Add micro-interactions
+- [ ] Optimize images
+- [ ] Test performance
+- [ ] Run accessibility audit
+- [ ] Test all browsers
+- [ ] Test all devices
+- [ ] Fix any remaining bugs
+
+## 🎯 EXPECTED RESULTS
+
+After implementing these changes:
+
+✅ **Consistent Design**: All pages share the same professional color palette and design language
+✅ **Full i18n Support**: Every text string is translatable across 14 languages
+✅ **Smooth Animations**: Professional animations enhance UX without being distracting
+✅ **Corporate Identity**: Maintains Haditra's professional, enterprise-focused brand
+✅ **No Theme Shifts**: Seamless transitions between pages
+✅ **Performance**: Fast loading and smooth interactions
+✅ **Accessibility**: WCAG AA compliant
+✅ **Responsive**: Perfect on all devices
+✅ **Modern**: Contemporary design that feels premium
+
+This transformation creates a cohesive, professional corporate website that represents Haditra's high-end positioning in the market.
