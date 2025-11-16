@@ -97,6 +97,7 @@ export default function HeroSlider({ language }: HeroSliderProps) {
 
   return (
     <section 
+      id="home"
       className="relative w-full h-screen overflow-hidden bg-slate-900"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}

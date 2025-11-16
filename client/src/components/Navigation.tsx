@@ -13,29 +13,59 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const navItems = language === 'en' 
-    ? ['Home', 'Services', 'Portfolio', 'About', 'Contact']
-    : ['الرئيسية', 'الخدمات', 'معرض الأعمال', 'من نحن', 'اتصل بنا'];
+    ? [
+        { label: 'Home', id: 'home' },
+        { label: 'Services', id: 'services' },
+        { label: 'Portfolio', id: 'portfolio' },
+        { label: 'About', id: 'about' },
+        { label: 'Contact', id: 'contact' }
+      ]
+    : [
+        { label: 'الرئيسية', id: 'home' },
+        { label: 'الخدمات', id: 'services' },
+        { label: 'معرض الأعمال', id: 'portfolio' },
+        { label: 'من نحن', id: 'about' },
+        { label: 'اتصل بنا', id: 'contact' }
+      ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80; // Navigation height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      setIsMenuOpen(false);
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-3">
+          <button 
+            onClick={() => scrollToSection('home')}
+            className="flex items-center gap-3 hover-elevate rounded-md px-2 py-1"
+          >
             <div className="w-10 h-10 rounded-md bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
               <span className="text-white font-bold text-xl">H</span>
             </div>
             <span className="text-white font-bold text-xl">Haditra</span>
-          </div>
+          </button>
 
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item, index) => (
               <button
                 key={index}
-                data-testid={`link-nav-${item.toLowerCase()}`}
+                data-testid={`link-nav-${item.label.toLowerCase()}`}
                 className="text-white/80 hover:text-white transition-colors text-sm font-medium hover-elevate px-3 py-2 rounded-md"
-                onClick={() => console.log(`Navigate to ${item}`)}
+                onClick={() => scrollToSection(item.id)}
               >
-                {item}
+                {item.label}
               </button>
             ))}
           </div>
@@ -76,14 +106,11 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
               {navItems.map((item, index) => (
                 <button
                   key={index}
-                  data-testid={`link-mobile-${item.toLowerCase()}`}
+                  data-testid={`link-mobile-${item.label.toLowerCase()}`}
                   className="block w-full text-left text-white/80 hover:text-white transition-colors text-base font-medium py-2 hover-elevate px-4 rounded-md"
-                  onClick={() => {
-                    console.log(`Navigate to ${item}`);
-                    setIsMenuOpen(false);
-                  }}
+                  onClick={() => scrollToSection(item.id)}
                 >
-                  {item}
+                  {item.label}
                 </button>
               ))}
             </div>
