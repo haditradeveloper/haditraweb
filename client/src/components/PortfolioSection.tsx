@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +22,11 @@ interface Project {
 export default function PortfolioSection({ language }: PortfolioSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // Reset category filter when language changes to prevent empty results
+  useEffect(() => {
+    setSelectedCategory('all');
+  }, [language]);
 
   const categories = {
     en: ['All', 'Software', 'AI', 'Creative'],
