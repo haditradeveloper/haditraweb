@@ -3,6 +3,13 @@ import { createServer, type Server } from "http";
 import { generateChatResponse } from "./services/chatService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.options('/api/chat', (req: Request, res: Response) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.sendStatus(200);
+  });
+
   app.post('/api/chat', async (req: Request, res: Response) => {
     try {
       const { message, language, conversationHistory } = req.body;
