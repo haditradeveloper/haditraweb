@@ -92,97 +92,58 @@ export default function ContactSection({ language }: ContactSectionProps) {
   };
 
   return (
-    <section id="contact" className="py-20 lg:py-32 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <p className="text-blue-600 font-semibold mb-3 uppercase tracking-wider text-sm">
+    <section id="contact" className="py-24 lg:py-32 bg-background border-t border-border">
+      <div className="max-w-6xl mx-auto px-6 lg:px-16">
+        <div className="text-center mb-20">
+          <p className="text-primary text-xs uppercase tracking-wider mb-4">
             {c.subtitle}
           </p>
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-3">
             {c.title}
           </h2>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             {c.description}
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-2 space-y-8"
-          >
-            <div className="bg-white rounded-lg p-6 hover-elevate">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-blue-600/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-6 h-6 text-blue-600" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Contact info */}
+          <div className="space-y-6">
+            {[
+              { icon: Mail, title: language === 'en' ? 'Email' : 'البريد الإلكتروني', content: c.contact.email, href: `mailto:${c.contact.email}` },
+              { icon: Phone, title: language === 'en' ? 'Phone' : 'الهاتف', content: c.contact.phone, href: `tel:${c.contact.phone.replace(/\s/g, '')}` },
+              { icon: MapPin, title: language === 'en' ? 'Location' : 'الموقع', content: c.contact.location }
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-4 pb-6 border-b border-border"
+              >
+                <div className="w-10 h-10 bg-primary flex items-center justify-center flex-shrink-0">
+                  <item.icon className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-slate-900 mb-1">
-                    {language === 'en' ? 'Email' : 'البريد الإلكتروني'}
+                  <h4 className="font-medium text-foreground mb-1 text-sm">
+                    {item.title}
                   </h4>
-                  <a 
-                    href={`mailto:${c.contact.email}`}
-                    className="text-slate-600 hover:text-blue-600 transition-colors"
-                  >
-                    {c.contact.email}
-                  </a>
+                  {item.href ? (
+                    <a 
+                      href={item.href}
+                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      {item.content}
+                    </a>
+                  ) : (
+                    <p className="text-muted-foreground text-sm">{item.content}</p>
+                  )}
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
 
-            <div className="bg-white rounded-lg p-6 hover-elevate">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-blue-600/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-slate-900 mb-1">
-                    {language === 'en' ? 'Phone' : 'الهاتف'}
-                  </h4>
-                  <a 
-                    href={`tel:${c.contact.phone.replace(/\s/g, '')}`}
-                    className="text-slate-600 hover:text-blue-600 transition-colors"
-                  >
-                    {c.contact.phone}
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 hover-elevate">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-blue-600/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-slate-900 mb-1">
-                    {language === 'en' ? 'Location' : 'الموقع'}
-                  </h4>
-                  <p className="text-slate-600">{c.contact.location}</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-3"
-          >
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg p-8 space-y-6">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-slate-900 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   {c.form.name}
                 </label>
                 <Input
@@ -191,14 +152,14 @@ export default function ContactSection({ language }: ContactSectionProps) {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder={c.form.name}
-                  className="w-full"
+                  className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-900 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     {c.form.email}
                   </label>
                   <Input
@@ -207,13 +168,13 @@ export default function ContactSection({ language }: ContactSectionProps) {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder={c.form.email}
-                    className="w-full"
+                    className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-900 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     {c.form.phone}
                   </label>
                   <Input
@@ -222,13 +183,13 @@ export default function ContactSection({ language }: ContactSectionProps) {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder={c.form.phone}
-                    className="w-full"
+                    className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-900 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   {c.form.message}
                 </label>
                 <Textarea
@@ -237,23 +198,22 @@ export default function ContactSection({ language }: ContactSectionProps) {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder={c.form.message}
                   rows={6}
-                  className="w-full resize-none"
+                  className="w-full resize-none bg-background border-border text-foreground placeholder:text-muted-foreground"
                   required
                 />
               </div>
 
-              <Button
-                type="submit"
-                size="lg"
-                data-testid="button-submit-contact"
-                disabled={isSubmitting}
-                className="w-full gap-2"
-              >
-                {isSubmitting ? c.form.sending : c.form.submit}
-                {!isSubmitting && <Send className="w-4 h-4" />}
-              </Button>
-            </form>
-          </motion.div>
+            <Button
+              type="submit"
+              size="lg"
+              data-testid="button-submit-contact"
+              disabled={isSubmitting}
+              className="w-full gap-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-none py-5 text-base font-medium transition-all duration-300"
+            >
+              {isSubmitting ? c.form.sending : c.form.submit}
+              {!isSubmitting && <Send className="w-4 h-4" />}
+            </Button>
+          </form>
         </div>
       </div>
     </section>

@@ -51,8 +51,10 @@ function CountUpAnimation({ end, suffix = '' }: { end: number; suffix?: string }
   }, [end, isVisible]);
 
   return (
-    <div ref={ref} className="text-5xl lg:text-6xl font-bold text-blue-600">
-      {count}{suffix}
+    <div ref={ref} className="relative">
+      <div className="text-6xl lg:text-7xl font-semibold bg-gradient-to-br from-white via-gray-200 to-[#ff6b35] bg-clip-text text-transparent">
+        {count}{suffix}
+      </div>
     </div>
   );
 }
@@ -74,37 +76,49 @@ export default function StatsSection({ language }: StatsSectionProps) {
   };
 
   return (
-    <section className="py-20 lg:py-32 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
-        <motion.div
+    <section className="py-24 lg:py-32 bg-background border-t border-border relative overflow-hidden">
+      {/* Subtle animated background */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+      <div className="max-w-6xl mx-auto px-6 lg:px-16 relative z-10">
+        <motion.div 
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-2">
             {language === 'en' ? 'Our Impact' : 'تأثيرنا'}
           </h2>
-          <p className="text-lg text-slate-600">
+          <p className="text-muted-foreground text-xs">
             {language === 'en' ? 'Delivering Excellence Across Industries' : 'تقديم التميز عبر الصناعات'}
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {stats[language].map((stat, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
               data-testid={`stat-${index}`}
-              className="bg-white rounded-lg p-8 text-center hover-elevate"
+              className="text-center"
             >
-              <CountUpAnimation end={stat.value} suffix={stat.suffix} />
-              <p className="text-slate-600 mt-3 text-base font-medium">{stat.label}</p>
-            </motion.div>
+              <div className="text-4xl lg:text-5xl font-bold text-foreground mb-1">
+                {stat.value}{stat.suffix}
+              </div>
+              <p className="text-muted-foreground text-xs">{stat.label}</p>
+            </div>
           ))}
         </div>
       </div>

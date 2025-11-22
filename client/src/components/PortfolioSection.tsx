@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { X, ExternalLink } from 'lucide-react';
 import { type Language } from '@/lib/i18n';
+import BackgroundGraphics from '@/components/BackgroundGraphics';
 
 interface PortfolioSectionProps {
   language: Language;
@@ -160,90 +161,88 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
     : projects[language].filter(p => p.category === categoryMap[selectedCategory]);
 
   return (
-    <section id="portfolio" className="py-20 lg:py-32 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <p className="text-blue-600 font-semibold mb-3 uppercase tracking-wider text-sm">
+    <section id="portfolio" className="relative py-24 lg:py-32 bg-background border-t border-border overflow-hidden">
+      <BackgroundGraphics variant="portfolio" />
+      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-16">
+        <div className="text-center mb-16">
+          <p className="text-primary text-xs uppercase tracking-wider mb-4">
             {language === 'en' ? 'Our Work' : 'أعمالنا'}
           </p>
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
-            {language === 'en' ? 'Featured Projects' : 'المشاريع المميزة'}
+          <h2 className="text-3xl lg:text-4xl font-bold mb-3">
+            <span className="text-foreground">
+              {language === 'en' ? 'Showcase of Our Exceptional' : 'عرض استثنائي'}
+            </span>
+            <br />
+            <span className="gradient-text text-4xl lg:text-5xl font-extrabold">
+              {language === 'en' ? 'PORTFOLIO' : 'المحفظة'}
+            </span>
           </h2>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            {language === 'en'
-              ? 'Discover some of our most impactful solutions across diverse industries'
-              : 'اكتشف بعضًا من حلولنا الأكثر تأثيرًا عبر صناعات متنوعة'}
-          </p>
-        </motion.div>
+        </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+        {/* Category filter */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
           {categories[language].map((category, index) => (
             <Button
               key={index}
               variant={selectedCategory === (categoryMap[category] || category.toLowerCase()) ? 'default' : 'outline'}
               data-testid={`button-category-${category.toLowerCase()}`}
               onClick={() => setSelectedCategory(categoryMap[category] || category.toLowerCase())}
-              className="rounded-full"
+              className={`rounded-none text-sm ${
+                selectedCategory === (categoryMap[category] || category.toLowerCase())
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'border-border text-muted-foreground hover:text-foreground'
+              }`}
             >
               {category}
             </Button>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project, index) => (
-            <motion.div
+            <div
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
               data-testid={`project-card-${project.id}`}
-              className="group bg-white rounded-lg overflow-hidden hover-elevate cursor-pointer"
+              className="group bg-card border border-border hover:border-primary cursor-pointer transition-all duration-300"
               onClick={() => setSelectedProject(project)}
             >
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
                 <img 
                   src={project.image} 
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  style={{ filter: 'brightness(0.6)' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                <div className="absolute top-4 left-4">
-                  <Badge className="bg-blue-600 text-white border-0">
+                <div className="absolute top-3 left-3">
+                  <Badge className="bg-primary text-primary-foreground border-0 text-xs">
                     {project.category}
                   </Badge>
                 </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{project.title}</h3>
-                <p className="text-slate-600 mb-4 text-sm leading-relaxed">{project.description}</p>
+              <div className="p-5">
+                <h3 className="text-base font-bold text-foreground mb-2">{project.title}</h3>
+                <p className="text-muted-foreground text-xs mb-3 leading-relaxed">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, i) => (
-                    <Badge key={i} variant="secondary" className="text-xs">
+                  {project.tags.slice(0, 2).map((tag, i) => (
+                    <span key={i} className="text-xs text-muted-foreground">
                       {tag}
-                    </Badge>
+                    </span>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
 
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6" onClick={() => setSelectedProject(null)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm p-6" onClick={() => setSelectedProject(null)}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-card rounded-none max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative h-80">
@@ -251,31 +250,32 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
                 src={selectedProject.image} 
                 alt={selectedProject.title}
                 className="w-full h-full object-cover"
+                style={{ filter: 'brightness(0.7)' }}
               />
               <Button
                 size="icon"
                 variant="ghost"
                 data-testid="button-close-modal"
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 bg-white/90 hover:bg-white text-slate-900"
+                className="absolute top-4 right-4 bg-background/90 hover:bg-background text-foreground border border-border"
               >
                 <X className="w-5 h-5" />
               </Button>
             </div>
             <div className="p-8">
-              <Badge className="bg-blue-600 text-white border-0 mb-4">
+              <Badge className="bg-primary text-primary-foreground border-0 mb-4">
                 {selectedProject.category}
               </Badge>
-              <h2 className="text-3xl font-bold text-slate-900 mb-4">{selectedProject.title}</h2>
-              <p className="text-slate-600 mb-6 text-lg leading-relaxed">{selectedProject.details}</p>
+              <h2 className="text-3xl font-semibold text-foreground mb-4">{selectedProject.title}</h2>
+              <p className="text-muted-foreground mb-6 text-lg leading-relaxed">{selectedProject.details}</p>
               <div className="flex flex-wrap gap-2 mb-6">
                 {selectedProject.tags.map((tag, i) => (
-                  <Badge key={i} variant="secondary">
+                  <Badge key={i} variant="secondary" className="bg-primary/20 text-primary border border-primary/30">
                     {tag}
                   </Badge>
                 ))}
               </div>
-              <Button className="gap-2">
+              <Button className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border border-primary/50 rounded-none">
                 <ExternalLink className="w-4 h-4" />
                 {language === 'en' ? 'View Case Study' : 'عرض دراسة الحالة'}
               </Button>

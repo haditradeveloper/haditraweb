@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Code, Brain, Camera, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { type Language } from '@/lib/i18n';
+import BackgroundGraphics from '@/components/BackgroundGraphics';
 
 interface ServicesSectionProps {
   language: Language;
@@ -52,66 +53,146 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
   };
 
   return (
-    <section id="services" className="py-20 lg:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
-        <motion.div
+    <section id="services" className="relative py-24 lg:py-32 bg-background border-t border-border overflow-hidden">
+      <BackgroundGraphics variant="services" />
+      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-16">
+        <motion.div 
+          className="text-center mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
         >
-          <p className="text-blue-600 font-semibold mb-3 uppercase tracking-wider text-sm">
+          <p className="text-primary text-xs uppercase tracking-wider mb-4">
             {language === 'en' ? 'Our Services' : 'خدماتنا'}
           </p>
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
-            {language === 'en' 
-              ? 'Comprehensive Technology & Creative Solutions' 
-              : 'حلول تقنية وإبداعية شاملة'}
+          <h2 className="text-3xl lg:text-4xl font-bold mb-3">
+            <span className="text-foreground">
+              {language === 'en' ? 'Explore Our Range of' : 'استكشف مجموعة'}
+            </span>
+            <br />
+            <span className="gradient-text text-4xl lg:text-5xl font-extrabold">
+              {language === 'en' ? 'SERVICES' : 'الخدمات'}
+            </span>
           </h2>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            {language === 'en'
-              ? 'From enterprise software to AI-powered systems and professional creative production'
-              : 'من برامج المؤسسات إلى الأنظمة المدعومة بالذكاء الاصطناعي والإنتاج الإبداعي الاحترافي'}
-          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="space-y-16">
           {services[language].map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
               data-testid={`service-card-${index}`}
-              className="bg-white border border-slate-200 rounded-lg p-8 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/10 hover-elevate group"
+              className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12"
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ 
+                duration: 0.6, 
+                delay: index * 0.2 
+              }}
+              whileHover={{ x: index % 2 === 0 ? -5 : 5 }}
             >
-              <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <service.icon className="w-7 h-7 text-white" />
-              </div>
-
-              <h3 className="text-2xl font-bold text-slate-900 mb-3">{service.title}</h3>
-              <p className="text-slate-600 mb-6 leading-relaxed">{service.description}</p>
-
-              <ul className="space-y-3 mb-6">
-                {service.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-2 text-slate-700">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-                    <span className="text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Button
-                variant="ghost"
-                data-testid={`button-service-${index}`}
-                className="text-blue-600 hover:text-blue-700 p-0 h-auto font-semibold group/btn"
-                onClick={() => console.log(`Learn more about ${service.title}`)}
+              <motion.div 
+                className="w-16 h-16 bg-primary flex items-center justify-center flex-shrink-0"
+                initial={{ scale: 0, rotate: -180 }}
+                whileInView={{ scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.2 + 0.2,
+                  type: "spring",
+                  stiffness: 200
+                }}
+                whileHover={{ 
+                  scale: 1.1, 
+                  rotate: 5,
+                  transition: { duration: 0.2 }
+                }}
               >
-                {language === 'en' ? 'Learn More' : 'اعرف المزيد'}
-                <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-              </Button>
+                <service.icon className="w-8 h-8 text-primary-foreground" />
+              </motion.div>
+
+              <div className="flex-1">
+                <motion.h3 
+                  className="text-2xl font-semibold mb-3"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 + 0.3 }}
+                >
+                  <span className="text-primary/70 text-lg font-light">
+                    {String(index + 1).padStart(2, '0')} -
+                  </span>
+                  {' '}
+                  <span className="text-foreground">
+                    {service.title.split(' ').slice(0, -1).join(' ')}
+                  </span>
+                  {' '}
+                  <span className="gradient-text font-extrabold">
+                    {service.title.split(' ').slice(-1)[0].toUpperCase()}
+                  </span>
+                </motion.h3>
+                <motion.p 
+                  className="text-muted-foreground mb-6 leading-relaxed"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 + 0.4 }}
+                >
+                  {service.description}
+                </motion.p>
+
+                <motion.div 
+                  className="flex flex-wrap gap-3 mb-6"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 + 0.5 }}
+                >
+                  {service.features.map((feature, i) => (
+                    <motion.span 
+                      key={i} 
+                      className="text-sm text-muted-foreground"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.2 + 0.5 + (i * 0.1) }}
+                      whileHover={{ color: 'hsl(var(--primary))' }}
+                    >
+                      {feature}
+                    </motion.span>
+                  ))}
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 + 0.6 }}
+                  whileHover={{ x: 5 }}
+                >
+                  <Button
+                  variant="ghost"
+                  data-testid={`button-service-${index}`}
+                  className="text-primary hover:text-primary/80 p-0 h-auto font-medium text-xs group/btn"
+                  onClick={() => {
+                    const element = document.getElementById('contact');
+                    if (element) {
+                      const offset = 56;
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - offset;
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
+                >
+                  {language === 'en' ? 'Learn More' : 'اعرف المزيد'}
+                  <ArrowRight className="w-3 h-3 ml-1 group-hover/btn:translate-x-1 transition-transform" />
+                </Button>
+                </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>

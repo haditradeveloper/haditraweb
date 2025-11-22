@@ -2,48 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LIGHT MODE */
+/* PROFESSIONAL MODE - Corporate Navy Blue & Professional Gray Theme */
 :root {
-  --button-outline: rgba(0,0,0, .10);
+  --button-outline: rgba(0,0,0, .08);
   --badge-outline: rgba(0,0,0, .05);
-  --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
+  --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(0,0,0, .02);
+  --elevate-2: rgba(0,0,0, .04);
   --background: 0 0% 100%;
-  --foreground: 222 47% 11%;
-  --border: 214 32% 91%;
-  --card: 210 40% 98%;
-  --card-foreground: 222 47% 11%;
-  --card-border: 214 32% 95%;
-  --sidebar: 214 32% 96%;
-  --sidebar-foreground: 222 47% 11%;
-  --sidebar-border: 214 32% 92%;
-  --sidebar-primary: 217 91% 60%;
+  --foreground: 220 25% 15%;
+  --border: 220 15% 88%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 25% 15%;
+  --card-border: 220 15% 92%;
+  --sidebar: 220 20% 97%;
+  --sidebar-foreground: 220 25% 15%;
+  --sidebar-border: 220 15% 90%;
+  --sidebar-primary: 220 70% 42%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 214 32% 91%;
-  --sidebar-accent-foreground: 222 47% 11%;
-  --sidebar-ring: 217 91% 60%;
-  --popover: 214 32% 94%;
-  --popover-foreground: 222 47% 11%;
-  --popover-border: 214 32% 89%;
-  --primary: 217 91% 35%;
+  --sidebar-accent: 220 15% 94%;
+  --sidebar-accent-foreground: 220 25% 15%;
+  --sidebar-ring: 220 70% 42%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 25% 15%;
+  --popover-border: 220 15% 88%;
+  --primary: 220 70% 42%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 214 32% 89%;
-  --secondary-foreground: 222 47% 11%;
-  --muted: 214 20% 92%;
-  --muted-foreground: 215 16% 47%;
-  --accent: 214 20% 93%;
-  --accent-foreground: 222 47% 11%;
+  --secondary: 220 15% 94%;
+  --secondary-foreground: 220 25% 15%;
+  --muted: 220 10% 96%;
+  --muted-foreground: 220 10% 50%;
+  --accent: 200 70% 50%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --input: 215 20% 65%;
-  --ring: 217 91% 60%;
-  --chart-1: 217 91% 35%;
-  --chart-2: 221 83% 53%;
-  --chart-3: 212 95% 45%;
-  --chart-4: 217 91% 25%;
-  --chart-5: 207 90% 40%;
-  --font-sans: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  --input: 220 10% 96%;
+  --ring: 220 70% 42%;
+  --chart-1: 220 70% 42%;
+  --chart-2: 200 70% 50%;
+  --chart-3: 210 60% 45%;
+  --chart-4: 195 65% 48%;
+  --chart-5: 185 60% 52%;
+  --font-sans: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: .5rem;
@@ -93,40 +93,40 @@
   --opaque-button-border-intensity: 9;
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
-  --background: 222 47% 11%;
-  --foreground: 210 40% 98%;
-  --border: 215 25% 20%;
-  --card: 220 39% 13%;
-  --card-foreground: 210 40% 98%;
-  --card-border: 215 30% 16%;
-  --sidebar: 217 33% 15%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-border: 215 28% 18%;
-  --sidebar-primary: 217 91% 60%;
+  --background: 0 0% 3%;
+  --foreground: 0 0% 98%;
+  --border: 220 20% 20%;
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 98%;
+  --card-border: 220 20% 15%;
+  --sidebar: 0 0% 7%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-border: 220 20% 15%;
+  --sidebar-primary: 160 84% 45%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 217 30% 18%;
-  --sidebar-accent-foreground: 210 40% 98%;
-  --sidebar-ring: 217 91% 60%;
-  --popover: 217 30% 17%;
-  --popover-foreground: 210 40% 98%;
-  --popover-border: 215 28% 20%;
-  --primary: 217 91% 35%;
+  --sidebar-accent: 220 20% 20%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-ring: 160 84% 45%;
+  --popover: 0 0% 8%;
+  --popover-foreground: 0 0% 98%;
+  --popover-border: 220 20% 20%;
+  --primary: 160 84% 45%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 217 25% 20%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217 15% 19%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 217 15% 18%;
-  --accent-foreground: 210 40% 98%;
+  --secondary: 220 20% 15%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 220 10% 65%;
+  --accent: 43 96% 56%;
+  --accent-foreground: 0 0% 0%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --input: 215 20% 35%;
-  --ring: 217 91% 60%;
-  --chart-1: 221 83% 70%;
-  --chart-2: 217 91% 75%;
-  --chart-3: 212 95% 68%;
-  --chart-4: 207 90% 72%;
-  --chart-5: 199 89% 65%;
+  --input: 0 0% 12%;
+  --ring: 160 84% 45%;
+  --chart-1: 160 84% 45%;
+  --chart-2: 43 96% 56%;
+  --chart-3: 217 91% 60%;
+  --chart-4: 330 81% 60%;
+  --chart-5: 195 65% 58%;
   --shadow-2xs: 0px 2px 0px 0px hsl(217 91% 60% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(217 91% 60% / 0.00);
   --shadow-sm: 0px 2px 0px 0px hsl(217 91% 60% / 0.00), 0px 1px 2px -1px hsl(217 91% 60% / 0.00);
@@ -215,9 +215,15 @@
   /* .no-default-hover-elevate/no-default-active-elevate is an escape hatch so consumers of
    * buttons/badges can remove the automatic brightness adjustment on interactions
    * and program their own. */
-  .no-default-hover-elevate {}
+  .no-default-hover-elevate {
+    /* Intentionally minimal - used as escape hatch */
+    content: normal;
+  }
 
-  .no-default-active-elevate {}
+  .no-default-active-elevate {
+    /* Intentionally minimal - used as escape hatch */
+    content: normal;
+  }
 
 
   /**
@@ -287,5 +293,82 @@
   .border.active-elevate-2:not(.no-active-interaction-elevate)::after,
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
+  }
+
+  /* Neon glow effects for background graphics */
+  .neon-glow {
+    filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor) drop-shadow(0 0 30px currentColor);
+  }
+
+  .neon-glow-blue {
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 30px rgba(59, 130, 246, 0.4));
+  }
+
+  .neon-glow-teal {
+    filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.8)) drop-shadow(0 0 20px rgba(16, 185, 129, 0.6)) drop-shadow(0 0 30px rgba(16, 185, 129, 0.4));
+  }
+
+  .neon-glow-yellow {
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.8)) drop-shadow(0 0 20px rgba(251, 191, 36, 0.6)) drop-shadow(0 0 30px rgba(251, 191, 36, 0.4));
+  }
+
+  .neon-glow-pink {
+    filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.4));
+  }
+
+  /* Animated gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #fbbf24 0%, #10b981 50%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradient-shift 5s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Glass morphism effect */
+  .glass-morphism {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Glowing border */
+  .glow-border {
+    position: relative;
+  }
+
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.6), rgba(16, 185, 129, 0.6), rgba(59, 130, 246, 0.6));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    filter: blur(8px);
+    opacity: 0.7;
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.8;
+    }
   }
 }

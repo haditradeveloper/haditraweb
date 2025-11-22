@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Sparkles, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { type Language } from '@/lib/i18n';
+import BackgroundGraphics from '@/components/BackgroundGraphics';
 
 import slide1 from '@assets/images/hero/Software_engineering_workspace_52fe8ba5.png';
 import slide2 from '@assets/images/hero/AI_machine_learning_visualization_22a86411.png';
@@ -11,6 +12,7 @@ import slide4 from '@assets/images/hero/IoT_enterprise_automation_11610dcb.png';
 
 interface HeroSliderProps {
   language: Language;
+  onOpenChatbot?: () => void;
 }
 
 const slides = [
@@ -20,7 +22,7 @@ const slides = [
   { id: 4, image: slide4, key: 'slide4' }
 ];
 
-export default function HeroSlider({ language }: HeroSliderProps) {
+export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -93,163 +95,345 @@ export default function HeroSlider({ language }: HeroSliderProps) {
     ]
   };
 
+  const services = {
+    en: [
+      'Software Engineering',
+      'AI & Technologies',
+      'Creative Studio',
+      'Digital Marketing',
+      'SEO Management',
+      'Social Media',
+      'Content Creation',
+      'Photography & Video'
+    ],
+    ar: [
+      'هندسة البرمجيات',
+      'الذكاء الاصطناعي',
+      'الاستوديو الإبداعي',
+      'التسويق الرقمي',
+      'إدارة SEO',
+      'وسائل التواصل',
+      'إنشاء المحتوى',
+      'التصوير والفيديو'
+    ]
+  };
+
   const content = slideContent[language][currentIndex];
 
   return (
     <section 
       id="home"
-      className="relative w-full h-screen overflow-hidden bg-slate-900"
+      className="relative w-full h-screen overflow-hidden bg-background flex"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0"
-        >
-          <img 
-            src={slides[currentIndex].image} 
-            alt={content.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-blue-900/80 to-slate-900/90" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/60" />
-        </motion.div>
-      </AnimatePresence>
+      {/* Left Section - Wide (70-75%) with Image */}
+      <div className="flex-1 relative">
+        {/* Abstract Background Graphics */}
+        <BackgroundGraphics variant="hero" className="z-0" />
+        
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 1.2 }}
+            className="absolute inset-0 z-10"
+          >
+            <div className="absolute inset-0">
+              <motion.img 
+                src={slides[currentIndex].image} 
+                alt={content.title}
+                className="w-full h-full object-cover"
+                style={{ 
+                  filter: 'brightness(0.3) contrast(1.2) saturate(0.8)',
+                }}
+                initial={{ scale: 1.1 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+              />
+              {/* Animated primary color lighting overlay from right */}
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              />
+              {/* Dark overlay for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-transparent" />
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
-      <div className="absolute inset-0 flex items-center justify-center z-20">
-        <div className="max-w-6xl mx-auto px-6 lg:px-16 text-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.6 }}
-            >
+        {/* Content overlay on left */}
+        <div className="absolute inset-0 flex items-center px-8 lg:px-16 xl:px-24 z-30">
+          <div className="max-w-2xl">
+            <AnimatePresence mode="wait">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="mb-8"
-              >
-                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-600/20 to-blue-400/20 backdrop-blur-2xl border border-blue-500/30">
-                  <Sparkles className="w-4 h-4 text-blue-400 animate-pulse" />
-                  <span className="text-sm lg:text-base text-white tracking-[0.2em] uppercase font-bold">
-                    {content.category}
-                  </span>
-                </div>
-              </motion.div>
-
-              <motion.h1
+                key={currentIndex}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight"
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.6 }}
               >
-                {content.title}
-                <br />
-                <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
-                  {content.subtitle}
-                </span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                className="text-lg lg:text-xl text-white/80 mb-10 max-w-3xl mx-auto leading-relaxed"
-              >
-                {content.description}
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                className="flex flex-wrap items-center justify-center gap-4"
-              >
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-muted-foreground text-sm mb-4 uppercase tracking-wider"
+                >
+                  {language === 'en' ? 'Hi there! this is' : 'مرحباً! هذا هو'}
+                </motion.p>
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 leading-[1.1] tracking-tight"
+                >
+                  <motion.span 
+                    className="block mb-2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                  >
+                    {content.title}
+                  </motion.span>
+                  <motion.span 
+                    className="block gradient-text"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                  >
+                    {content.subtitle}
+                  </motion.span>
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  className="text-muted-foreground text-base mb-8 leading-relaxed max-w-xl"
+                >
+                  {content.description}
+                </motion.p>
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.5 }}
                 >
                   <Button
                     size="lg"
                     data-testid="button-hero-primary"
-                    className="group relative bg-gradient-to-r from-blue-600 via-blue-600 to-blue-700 hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 text-white px-8 py-5 text-base font-semibold rounded-full shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-300 overflow-hidden"
-                    onClick={() => console.log('Primary CTA clicked')}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-sm font-medium rounded-none transition-colors duration-200 group"
+                    onClick={() => {
+                      const element = document.getElementById('portfolio');
+                      if (element) {
+                        const offset = 56;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - offset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
                   >
-                    <span className="relative z-10 flex items-center gap-2">
+                    <span className="flex items-center gap-2">
                       {language === 'en' ? 'View Our Work' : 'شاهد أعمالنا'}
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                    </span>
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0"
-                      initial={{ x: '-100%' }}
-                      whileHover={{ x: '100%' }}
-                      transition={{ duration: 0.6 }}
-                    />
-                  </Button>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    data-testid="button-hero-secondary"
-                    className="group relative border-2 border-white/40 text-white hover:border-white/60 hover:bg-white/10 backdrop-blur-md px-8 py-5 text-base font-semibold rounded-full transition-all duration-300 shadow-lg shadow-white/5 hover:shadow-white/10 bg-white/5"
-                    onClick={() => console.log('Secondary CTA clicked')}
-                  >
-                    <span className="relative z-10 flex items-center gap-2">
-                      {language === 'en' ? 'Start Your Project' : 'ابدأ مشروعك'}
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </Button>
                 </motion.div>
               </motion.div>
-            </motion.div>
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Simple slide indicators */}
+        <div className="absolute bottom-8 left-8 z-40 flex gap-1.5">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              data-testid={`button-slide-${index}`}
+              onClick={() => setCurrentIndex(index)}
+              className={`transition-all duration-200 ${
+                index === currentIndex 
+                  ? 'w-10 h-0.5 bg-primary' 
+                  : 'w-6 h-0.5 bg-muted-foreground/50 hover:bg-muted-foreground'
+              }`}
+            />
+          ))}
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-0 right-0 z-30 flex items-center justify-center gap-3">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            data-testid={`button-slide-${index}`}
-            onClick={() => setCurrentIndex(index)}
-            className={`h-2 rounded-full transition-all ${
-              index === currentIndex ? 'w-12 bg-white' : 'w-2 bg-white/40 hover:bg-white/60'
-            }`}
-          />
-        ))}
-      </div>
-
-      <Button
-        size="icon"
-        variant="ghost"
-        data-testid="button-prev-slide"
-        onClick={prevSlide}
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-30 text-white hover:bg-white/10 backdrop-blur-sm"
+      {/* Right Sidebar - Services & CTA Only */}
+      <motion.div 
+        className="w-full lg:w-1/4 bg-background/95 backdrop-blur-sm border-l border-border p-10 flex flex-col justify-between relative z-20 overflow-hidden"
+        initial={{ opacity: 0, x: 50, scale: 0.95 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ 
+          duration: 0.8, 
+          delay: 0.3,
+          type: "spring",
+          stiffness: 100,
+          damping: 15
+        }}
       >
-        <ChevronLeft className="w-8 h-8" />
-      </Button>
+        {/* Animated background gradient */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5"
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: [0, 0.3, 0.2, 0.3],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
 
-      <Button
-        size="icon"
-        variant="ghost"
-        data-testid="button-next-slide"
-        onClick={nextSlide}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-30 text-white hover:bg-white/10 backdrop-blur-sm"
-      >
-        <ChevronRight className="w-8 h-8" />
-      </Button>
+        {/* Services List */}
+        <div className="relative z-10">
+          <motion.h3 
+            className="text-foreground font-medium mb-6 text-xs uppercase tracking-wider text-muted-foreground relative"
+            initial={{ opacity: 0, y: -20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ 
+              delay: 0.5, 
+              duration: 0.6,
+              type: "spring",
+              stiffness: 200
+            }}
+          >
+            {language === 'en' ? 'Services' : 'الخدمات'}
+            <motion.div
+              className="absolute bottom-0 left-0 h-0.5 bg-primary"
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ delay: 0.8, duration: 0.5, ease: "easeOut" }}
+            />
+          </motion.h3>
+          <ul className="space-y-3">
+            {services[language].slice(0, 4).map((service, index) => {
+              const scrollToSection = (id: string) => {
+                const element = document.getElementById(id);
+                if (element) {
+                  const offset = 56;
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - offset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              };
+              
+              const handleServiceClick = () => {
+                scrollToSection('services');
+              };
+              
+              return (
+                <motion.li 
+                  key={index} 
+                  className="relative text-muted-foreground text-sm cursor-pointer group"
+                  initial={{ opacity: 0, x: -30, scale: 0.9 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  transition={{ 
+                    delay: 0.6 + (index * 0.15),
+                    duration: 0.5,
+                    type: "spring",
+                    stiffness: 150,
+                    damping: 12
+                  }}
+                  whileHover={{ 
+                    x: 8,
+                    scale: 1.02,
+                    color: "hsl(var(--primary))"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleServiceClick}
+                >
+                  <span className="relative z-10 block transition-colors duration-200">
+                    {service}
+                  </span>
+                  <motion.div
+                    className="absolute left-0 top-1/2 h-0.5 bg-primary -translate-y-1/2"
+                    initial={{ width: 0, opacity: 0 }}
+                    whileHover={{ width: "100%", opacity: 1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  />
+                  <motion.div
+                    className="absolute -left-2 top-1/2 w-1 h-1 rounded-full bg-primary -translate-y-1/2"
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileHover={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                  />
+                </motion.li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          className="relative z-10"
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ 
+            delay: 1, 
+            duration: 0.7,
+            type: "spring",
+            stiffness: 120,
+            damping: 15
+          }}
+        >
+          <motion.div
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <Button
+              variant="ghost"
+              className="mb-6 text-foreground hover:text-primary p-0 h-auto font-normal text-sm group relative overflow-hidden"
+              onClick={() => onOpenChatbot?.()}
+            >
+              <motion.span
+                className="flex items-center gap-2 relative z-10"
+                whileHover={{ x: 2 }}
+              >
+                {language === 'en' ? "Let's talk" : 'دعنا نتحدث'}
+                <motion.div
+                  whileHover={{ x: 4, rotate: 0 }}
+                  initial={{ rotate: 0 }}
+                >
+                  <ArrowRight className="w-4 h-4 transition-transform" />
+                </motion.div>
+              </motion.span>
+              <motion.div
+                className="absolute inset-0 bg-primary/10"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              />
+            </Button>
+          </motion.div>
+          <motion.p 
+            className="text-muted-foreground text-xs leading-relaxed"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              delay: 1.3, 
+              duration: 0.6,
+              ease: "easeOut"
+            }}
+          >
+            {language === 'en' 
+              ? "Award winning technology and creative solutions provider."
+              : 'مزود حلول تقنية وإبداعية حائز على جوائز.'}
+          </motion.p>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

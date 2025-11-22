@@ -44,17 +44,17 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/20 backdrop-blur-lg border-b border-white/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="max-w-7xl mx-auto px-3 lg:px-6">
         <div className="flex items-center justify-between h-14">
           <button 
             onClick={() => scrollToSection('home')}
-            className="flex items-center gap-1.5 hover-elevate rounded-md px-1.5 py-0.5"
+            className="flex items-center gap-1.5 hover-elevate rounded-none px-1.5 py-0.5"
           >
-            <div className="w-7 h-7 rounded-md bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">H</span>
+            <div className="w-7 h-7 rounded-none bg-primary flex items-center justify-center border border-primary/50">
+              <span className="text-primary-foreground font-bold text-sm">H</span>
             </div>
-            <span className="text-white font-bold text-base">Haditra</span>
+            <span className="text-foreground font-semibold text-base">Haditra</span>
           </button>
 
           <div className="flex items-center gap-4">
@@ -63,7 +63,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
                 <button
                   key={index}
                   data-testid={`link-nav-${item.label.toLowerCase()}`}
-                  className="text-white/80 hover:text-white transition-colors text-sm font-medium hover-elevate px-2 py-1 rounded-md"
+                  className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium hover-elevate px-2 py-1 rounded-md"
                   onClick={() => scrollToSection(item.id)}
                 >
                   {item.label}
@@ -76,7 +76,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
               variant="ghost"
               data-testid="button-language-toggle"
               onClick={() => onLanguageChange(language === 'en' ? 'ar' : 'en')}
-              className="text-white hover:bg-white/10 h-8 w-8"
+              className="text-foreground hover:bg-primary/20 h-8 w-8"
             >
               <Globe className="w-4 h-4" />
             </Button>
@@ -85,7 +85,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
               size="icon"
               variant="ghost"
               data-testid="button-menu-toggle"
-              className="lg:hidden text-white hover:bg-white/10 h-8 w-8"
+              className="lg:hidden text-foreground hover:bg-primary/20 h-8 w-8"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -100,14 +100,14 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-slate-900/20 backdrop-blur-lg border-t border-white/10"
+            className="lg:hidden bg-background/95 backdrop-blur-lg border-t border-border"
           >
             <div className="px-6 py-6 space-y-4">
               {navItems.map((item, index) => (
                 <button
                   key={index}
                   data-testid={`link-mobile-${item.label.toLowerCase()}`}
-                  className="block w-full text-left text-white/80 hover:text-white transition-colors text-base font-medium py-2 hover-elevate px-4 rounded-md"
+                  className="block w-full text-left text-foreground/80 hover:text-foreground transition-colors text-base font-medium py-2 hover-elevate px-4 rounded-md"
                   onClick={() => scrollToSection(item.id)}
                 >
                   {item.label}
