@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, type UserConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
@@ -14,7 +14,7 @@ const getReplitPlugins = async () => {
   return [];
 };
 
-export default defineConfig(async (): Promise<any> => {
+export default defineConfig(async (): Promise<UserConfig> => {
   const replitPlugins = await getReplitPlugins();
   
   return {
