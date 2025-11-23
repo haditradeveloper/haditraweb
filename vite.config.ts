@@ -14,7 +14,7 @@ const getReplitPlugins = async () => {
   return [];
 };
 
-export default defineConfig(async () => {
+export default defineConfig(async (): Promise<any> => {
   const replitPlugins = await getReplitPlugins();
   
   return {
@@ -42,7 +42,7 @@ export default defineConfig(async () => {
       sourcemap: false,
       rollupOptions: {
         output: {
-          manualChunks(id) {
+          manualChunks(id: string) {
             if (id.includes('node_modules')) {
               if (id.includes('react') || id.includes('react-dom') || id.includes('react/jsx-runtime')) {
                 return undefined;
