@@ -327,8 +327,6 @@ export const generateChatResponse = async (request: ChatRequest): Promise<ChatRe
   const apiKey = process.env.GROQ_API_KEY;
   
   if (!apiKey || apiKey.trim() === '') {
-    console.warn('GROQ_API_KEY not configured, using fallback responses');
-    console.warn('To enable AI responses, set GROQ_API_KEY environment variable');
     return {
       response: getFallbackResponse(request.message, request.language, request.conversationHistory),
       success: false,
@@ -353,11 +351,7 @@ export const generateChatResponse = async (request: ChatRequest): Promise<ChatRe
 
     messages.push({ role: 'user', content: request.message });
 
-    // Always try to use AI model when API key is available
     const client = getGroqClient();
-    console.log('🤖 Calling Groq AI API with model:', MODEL);
-    console.log('📝 Message:', request.message.substring(0, 50) + '...');
-    console.log('💬 Conversation history length:', request.conversationHistory?.length || 0);
     
     const completion = await client.chat.completions.create({
       model: MODEL,
@@ -373,7 +367,6 @@ export const generateChatResponse = async (request: ChatRequest): Promise<ChatRe
     const response = completion.choices[0]?.message?.content?.trim() || '';
 
     if (!response) {
-      console.warn('Empty response from Groq API, using fallback');
       return {
         response: getFallbackResponse(request.message, request.language, request.conversationHistory),
         success: false,
@@ -381,24 +374,13 @@ export const generateChatResponse = async (request: ChatRequest): Promise<ChatRe
       };
     }
 
-    console.log('✅ Successfully received AI response:', response.substring(0, 50) + '...');
     return {
       response,
       success: true
     };
   } catch (error: any) {
-    // Log the error for debugging
-    console.error('❌ Error calling Groq API:', error);
-    console.error('Error details:', {
-      message: error?.message,
-      code: error?.code,
-      status: error?.status,
-      type: error?.constructor?.name
-    });
     const errorMessage = error?.message || 'Unknown error';
     
-    // Only use fallback if there's an actual error
-    console.warn('⚠️ Falling back to keyword-based responses due to API error');
     return {
       response: getFallbackResponse(request.message, request.language, request.conversationHistory),
       success: false,

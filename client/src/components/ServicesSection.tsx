@@ -4,6 +4,7 @@ import { Code, Brain, Camera, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { type Language } from '@/lib/i18n';
 import BackgroundGraphics from '@/components/BackgroundGraphics';
+import { getCSSVariableColor } from '@/lib/utils';
 
 interface ServicesSectionProps {
   language: Language;
@@ -176,7 +177,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.2 + 0.5 + (i * 0.1) }}
-                      whileHover={{ color: 'hsl(var(--primary))' }}
+                      whileHover={{ color: getCSSVariableColor('--primary') }}
                     >
                       {feature}
                     </motion.span>

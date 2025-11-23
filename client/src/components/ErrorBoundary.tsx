@@ -21,9 +21,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: { componentStack: string }): void {
-    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-      console.error('ErrorBoundary caught an error:', error, errorInfo);
-    }
   }
 
   render(): ReactNode {

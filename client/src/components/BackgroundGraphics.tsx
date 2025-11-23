@@ -223,28 +223,29 @@ const BackgroundGraphics = memo(function BackgroundGraphics({ variant = 'default
             className="w-full h-full"
             preserveAspectRatio="none"
           >
-            {[0, 1].map((wave) => (
-              <motion.path
-                key={wave}
-                d={`M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`}
-                fill="none"
-                stroke={`rgba(${wave === 0 ? '16, 185, 129' : '59, 130, 246'}, 0.6)`}
-                strokeWidth="2"
-              style={{ willChange: 'transform' }}
-              animate={{
-                d: [
-                  `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
-                  `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? -20 : 20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
-                  `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
-                ],
-              }}
-                transition={{
-                  duration: 6 + wave,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              />
-            ))}
+            {[0, 1].map((wave) => {
+              const basePath = `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`;
+              const altPath = `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? -20 : 20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`;
+              return (
+                <motion.path
+                  key={wave}
+                  initial={{ d: basePath }}
+                  d={basePath}
+                  fill="none"
+                  stroke={`rgba(${wave === 0 ? '16, 185, 129' : '59, 130, 246'}, 0.6)`}
+                  strokeWidth="2"
+                  style={{ willChange: 'transform' }}
+                  animate={{
+                    d: [basePath, altPath, basePath],
+                  }}
+                  transition={{
+                    duration: 6 + wave,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+              );
+            })}
           </svg>
         </div>
       )}

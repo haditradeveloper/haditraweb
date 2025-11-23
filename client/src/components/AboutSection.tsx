@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Target, Users, Award, Zap } from 'lucide-react';
 import { type Language } from '@/lib/i18n';
 import BackgroundGraphics from '@/components/BackgroundGraphics';
+import { getCSSVariableColor } from '@/lib/utils';
 
 interface AboutSectionProps {
   language: Language;
@@ -155,7 +156,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            whileHover={{ scale: 1.02, borderColor: 'hsl(var(--primary))' }}
+            whileHover={{ scale: 1.02, borderColor: getCSSVariableColor('--primary') }}
           >
             <motion.div 
               className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 flex items-center justify-center mb-4 sm:mb-6"

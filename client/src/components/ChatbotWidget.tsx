@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send } from 'lucide-react';
 import { type Language } from '@/lib/i18n';
 import Logo from '@/components/Logo';
+import { getCSSVariableColor } from '@/lib/utils';
 
 interface ChatbotWidgetProps {
   language: Language;
@@ -548,7 +549,7 @@ const ChatbotWidget = memo(function ChatbotWidget({ language, isOpenExternal, on
                   aria-label="Send message"
                   style={{
                     background: inputValue.trim()
-                      ? 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))'
+                      ? `linear-gradient(135deg, ${getCSSVariableColor('--primary')}, ${getCSSVariableColor('--accent')})`
                       : 'rgba(16, 185, 129, 0.2)',
                     boxShadow: inputValue.trim()
                       ? '0 4px 20px rgba(16, 185, 129, 0.5), 0 0 30px rgba(16, 185, 129, 0.3)'

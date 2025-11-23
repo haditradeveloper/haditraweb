@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { type Language } from '@/lib/i18n';
 import BackgroundGraphics from '@/components/BackgroundGraphics';
+import { getCSSVariableColor } from '@/lib/utils';
 
 import slide1 from '@assets/images/hero/Software_engineering_workspace_52fe8ba5.png';
 import slide2 from '@assets/images/hero/AI_machine_learning_visualization_22a86411.png';
@@ -337,7 +338,7 @@ const HeroSlider = memo(function HeroSlider({ language, onOpenChatbot }: HeroSli
                   whileHover={{ 
                     x: 8,
                     scale: 1.02,
-                    color: "hsl(var(--primary))"
+                    color: getCSSVariableColor('--primary')
                   }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => scrollToSection('services')}
