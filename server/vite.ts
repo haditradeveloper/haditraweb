@@ -76,13 +76,38 @@ export function serveStatic(app: Express) {
     );
   }
 
+  const indexHtmlPath = path.resolve(distPath, "index.html");
+  if (!fs.existsSync(indexHtmlPath)) {
+    throw new Error(
+      `Could not find index.html in build directory: ${indexHtmlPath}`,
+    );
+  }
+
+  log(`Serving static files from: ${distPath}`);
+
   app.use(express.static(distPath, {
     maxAge: '1y',
     etag: true,
     lastModified: true,
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.html')) {
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      }
+    },
   }));
 
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api")) {
+      return next();
+    }
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.sendFile(indexHtmlPath, (err) => {
+      if (err) {
+        log(`Error sending index.html: ${err.message}`, "error");
+        if (!res.headersSent) {
+          res.status(500).send("Error loading page");
+        }
+      }
+    });
   });
 }
