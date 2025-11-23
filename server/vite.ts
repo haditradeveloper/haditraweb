@@ -96,23 +96,13 @@ export function serveStatic(app: Express) {
         res.setHeader('Content-Type', 'text/css; charset=utf-8');
       }
     },
-    index: false,
-    fallthrough: false,
   }));
 
-  app.get("*", (req, res, next) => {
+  app.get("*", (req, res) => {
     if (req.path.startsWith("/api")) {
-      return next();
-    }
-    const filePath = path.join(distPath, req.path);
-    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-      return next();
+      return res.status(404).json({ error: "Not found" });
     }
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.sendFile(indexHtmlPath, (err) => {
-      if (err && !res.headersSent) {
-        res.status(500).send("Error loading page");
-      }
-    });
+    res.sendFile(indexHtmlPath);
   });
 }
