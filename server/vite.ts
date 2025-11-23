@@ -83,8 +83,6 @@ export function serveStatic(app: Express) {
     );
   }
 
-  log(`Serving static files from: ${distPath}`);
-
   app.use(express.static(distPath, {
     maxAge: '1y',
     etag: true,
@@ -98,19 +96,17 @@ export function serveStatic(app: Express) {
         res.setHeader('Content-Type', 'text/css; charset=utf-8');
       }
     },
+    index: false,
   }));
 
   app.get("*", (req, res, next) => {
-    if (req.path.startsWith("/api")) {
+    if (req.path.startsWith("/api") || req.path.startsWith("/assets")) {
       return next();
     }
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.sendFile(indexHtmlPath, (err) => {
-      if (err) {
-        log(`Error sending index.html: ${err.message}`, "error");
-        if (!res.headersSent) {
-          res.status(500).send("Error loading page");
-        }
+      if (err && !res.headersSent) {
+        res.status(500).send("Error loading page");
       }
     });
   });
