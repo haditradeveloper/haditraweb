@@ -97,10 +97,15 @@ export function serveStatic(app: Express) {
       }
     },
     index: false,
+    fallthrough: false,
   }));
 
   app.get("*", (req, res, next) => {
-    if (req.path.startsWith("/api") || req.path.startsWith("/assets")) {
+    if (req.path.startsWith("/api")) {
+      return next();
+    }
+    const filePath = path.join(distPath, req.path);
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
       return next();
     }
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
