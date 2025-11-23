@@ -54,7 +54,7 @@ export default function Logo({ size = 'md', showGlow = true, className = '', onC
         alt="Heditra Logo"
         className={`${sizeClass} w-auto object-contain transition-all`}
         loading="eager"
-        fetchPriority="high"
+        fetchpriority="high"
         style={{
           filter: 'brightness(1.1) contrast(1.1)',
         }}

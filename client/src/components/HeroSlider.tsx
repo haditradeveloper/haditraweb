@@ -170,7 +170,7 @@ const HeroSlider = memo(function HeroSlider({ language, onOpenChatbot }: HeroSli
                 alt={`${content.category}: ${content.title} - ${content.subtitle}`}
                 className="w-full h-full object-cover"
                 loading={currentIndex === 0 ? "eager" : "lazy"}
-                fetchPriority={currentIndex === 0 ? "high" : "auto"}
+                fetchpriority={currentIndex === 0 ? "high" : "auto"}
                 width="1920"
                 height="1080"
                 style={{ 
