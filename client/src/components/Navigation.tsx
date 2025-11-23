@@ -46,33 +46,31 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/50 backdrop-blur-lg border-b border-border">
-      <div className="max-w-7xl mx-auto pl-0 pr-8 lg:pl-0 lg:pr-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
           <motion.button
             onClick={() => scrollToSection('home')}
-            className="flex items-center gap-3 hover-elevate rounded-none px-0 py-1.5 -ml-6 lg:-ml-8 group relative"
+            className="flex items-center gap-2 sm:gap-3 hover-elevate rounded-none px-0 py-1.5 group relative"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {/* Logo - simple and clean */}
             <Logo 
               size="lg" 
               showGlow={false}
               className="flex-shrink-0"
             />
 
-            {/* Company name - simple and clean */}
             <div className="flex flex-col items-start">
-              <span className="text-foreground font-semibold text-base lg:text-lg leading-none tracking-normal">
+              <span className="text-foreground font-semibold text-sm sm:text-base lg:text-lg leading-none tracking-normal">
                 HEDITRA
               </span>
-              <span className="text-muted-foreground text-[7px] lg:text-[8px] leading-tight tracking-[0.2em] uppercase hidden sm:block mt-0.5 font-normal">
+              <span className="text-muted-foreground text-[6px] sm:text-[7px] lg:text-[8px] leading-tight tracking-[0.2em] uppercase hidden sm:block mt-0.5 font-normal">
                 Technologies & Creative Design
               </span>
             </div>
           </motion.button>
 
-          <div className="flex items-center gap-4 -mr-40">
+          <div className="flex items-center gap-2 sm:gap-4">
             <div className="hidden lg:flex items-center gap-4">
               {navItems.map((item, index) => (
                 <button
@@ -91,7 +89,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
               variant="ghost"
               data-testid="button-language-toggle"
               onClick={() => onLanguageChange(language === 'en' ? 'ar' : 'en')}
-              className="text-foreground hover:bg-primary/20 h-8 w-8"
+              className="text-foreground hover:bg-primary/20 h-8 w-8 sm:h-8 sm:w-8"
             >
               <Globe className="w-4 h-4" />
             </Button>
@@ -100,7 +98,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
               size="icon"
               variant="ghost"
               data-testid="button-menu-toggle"
-              className="lg:hidden text-foreground hover:bg-primary/20 h-8 w-8"
+              className="lg:hidden text-foreground hover:bg-primary/20 h-8 w-8 sm:h-8 sm:w-8"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -117,7 +115,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden bg-background/70 backdrop-blur-lg border-t border-border"
           >
-            <div className="px-6 py-6 space-y-4">
+            <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
               {navItems.map((item, index) => (
                 <button
                   key={index}

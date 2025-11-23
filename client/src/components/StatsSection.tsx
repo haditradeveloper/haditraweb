@@ -76,10 +76,9 @@ export default function StatsSection({ language }: StatsSectionProps) {
   };
 
   return (
-    <section className="py-24 lg:py-32 bg-background border-t border-border relative overflow-hidden">
-      {/* Subtle animated background */}
+    <section className="py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border relative overflow-hidden">
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-primary/10 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.3, 0.5, 0.3],
@@ -91,33 +90,33 @@ export default function StatsSection({ language }: StatsSectionProps) {
         }}
       />
       
-      <div className="max-w-6xl mx-auto px-6 lg:px-16 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-16 relative z-10">
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12 lg:mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-2">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-1 sm:mb-2">
             {language === 'en' ? 'Our Impact' : 'تأثيرنا'}
           </h2>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-xs sm:text-sm">
             {language === 'en' ? 'Delivering Excellence Across Industries' : 'تقديم التميز عبر الصناعات'}
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
           {stats[language].map((stat, index) => (
             <div
               key={index}
               data-testid={`stat-${index}`}
               className="text-center"
             >
-              <div className="text-4xl lg:text-5xl font-bold text-foreground mb-1">
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-1">
                 {stat.value}{stat.suffix}
               </div>
-              <p className="text-muted-foreground text-xs">{stat.label}</p>
+              <p className="text-muted-foreground text-[10px] sm:text-xs">{stat.label}</p>
             </div>
           ))}
         </div>

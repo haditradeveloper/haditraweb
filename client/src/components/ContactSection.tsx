@@ -92,23 +92,22 @@ export default function ContactSection({ language }: ContactSectionProps) {
   };
 
   return (
-    <section id="contact" className="py-24 lg:py-32 bg-background border-t border-border">
-      <div className="max-w-6xl mx-auto px-6 lg:px-16">
-        <div className="text-center mb-20">
-          <p className="text-primary text-xs uppercase tracking-wider mb-4">
+    <section id="contact" className="py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-16">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+          <p className="text-primary text-xs uppercase tracking-wider mb-3 sm:mb-4">
             {c.subtitle}
           </p>
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2 sm:mb-3">
             {c.title}
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base px-4">
             {c.description}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact info */}
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12">
+          <div className="space-y-4 sm:space-y-6">
             {[
               { icon: Mail, title: language === 'en' ? 'Email' : 'البريد الإلكتروني', content: c.contact.email, href: `mailto:${c.contact.email}` },
               { icon: Phone, title: language === 'en' ? 'Phone' : 'الهاتف', content: c.contact.phone, href: `tel:${c.contact.phone.replace(/\s/g, '')}` },
@@ -116,34 +115,33 @@ export default function ContactSection({ language }: ContactSectionProps) {
             ].map((item, index) => (
               <div
                 key={index}
-                className="flex items-start gap-4 pb-6 border-b border-border"
+                className="flex items-start gap-3 sm:gap-4 pb-4 sm:pb-6 border-b border-border"
               >
-                <div className="w-10 h-10 bg-primary flex items-center justify-center flex-shrink-0">
-                  <item.icon className="w-5 h-5 text-primary-foreground" />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-primary flex items-center justify-center flex-shrink-0">
+                  <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-foreground mb-1 text-sm">
+                  <h4 className="font-medium text-foreground mb-1 text-xs sm:text-sm">
                     {item.title}
                   </h4>
                   {item.href ? (
                     <a 
                       href={item.href}
-                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                      className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm break-all"
                     >
                       {item.content}
                     </a>
                   ) : (
-                    <p className="text-muted-foreground text-sm">{item.content}</p>
+                    <p className="text-muted-foreground text-xs sm:text-sm">{item.content}</p>
                   )}
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">
                   {c.form.name}
                 </label>
                 <Input
@@ -152,14 +150,14 @@ export default function ContactSection({ language }: ContactSectionProps) {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder={c.form.name}
-                  className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground"
+                  className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground text-sm"
                   required
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">
                     {c.form.email}
                   </label>
                   <Input
@@ -168,13 +166,13 @@ export default function ContactSection({ language }: ContactSectionProps) {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder={c.form.email}
-                    className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground"
+                    className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground text-sm"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
+                  <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">
                     {c.form.phone}
                   </label>
                   <Input
@@ -183,13 +181,13 @@ export default function ContactSection({ language }: ContactSectionProps) {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder={c.form.phone}
-                    className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground"
+                    className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground text-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">
                   {c.form.message}
                 </label>
                 <Textarea
@@ -197,8 +195,8 @@ export default function ContactSection({ language }: ContactSectionProps) {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder={c.form.message}
-                  rows={6}
-                  className="w-full resize-none bg-background border-border text-foreground placeholder:text-muted-foreground"
+                  rows={5}
+                  className="w-full resize-none bg-background border-border text-foreground placeholder:text-muted-foreground text-sm"
                   required
                 />
               </div>
@@ -208,10 +206,10 @@ export default function ContactSection({ language }: ContactSectionProps) {
               size="lg"
               data-testid="button-submit-contact"
               disabled={isSubmitting}
-              className="w-full gap-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-none py-5 text-base font-medium transition-all duration-300"
+              className="w-full gap-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-none py-4 sm:py-5 text-sm sm:text-base font-medium transition-all duration-300"
             >
               {isSubmitting ? c.form.sending : c.form.submit}
-              {!isSubmitting && <Send className="w-4 h-4" />}
+              {!isSubmitting && <Send className="w-3 h-3 sm:w-4 sm:h-4" />}
             </Button>
           </form>
         </div>

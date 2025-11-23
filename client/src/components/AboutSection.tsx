@@ -84,30 +84,30 @@ export default function AboutSection({ language }: AboutSectionProps) {
   const c = content[language];
 
   return (
-    <section id="about" className="relative py-24 lg:py-32 bg-background border-t border-border overflow-hidden">
+    <section id="about" className="relative py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border overflow-hidden">
       <BackgroundGraphics variant="default" />
-      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-16">
         <motion.div 
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-primary text-xs uppercase tracking-wider mb-4">
+          <p className="text-primary text-xs uppercase tracking-wider mb-3 sm:mb-4">
             {c.subtitle}
           </p>
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2 sm:mb-3">
             {c.title}
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed text-sm">
+          <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed text-xs sm:text-sm px-4">
             {c.description}
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 mb-12 sm:mb-16 lg:mb-20">
           <motion.div 
-            className="bg-primary p-10 text-primary-foreground"
+            className="bg-primary p-6 sm:p-8 lg:p-10 text-primary-foreground"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -115,20 +115,20 @@ export default function AboutSection({ language }: AboutSectionProps) {
             whileHover={{ scale: 1.02 }}
           >
             <motion.div 
-              className="w-12 h-12 bg-white/20 flex items-center justify-center mb-6"
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 flex items-center justify-center mb-4 sm:mb-6"
               initial={{ rotate: -180, scale: 0 }}
               whileInView={{ rotate: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Target className="w-6 h-6" />
+              <Target className="w-5 h-5 sm:w-6 sm:h-6" />
             </motion.div>
-            <h3 className="text-xl font-bold mb-3">{c.mission.title}</h3>
-            <p className="text-foreground/90 leading-relaxed text-sm">{c.mission.text}</p>
+            <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">{c.mission.title}</h3>
+            <p className="text-foreground/90 leading-relaxed text-xs sm:text-sm">{c.mission.text}</p>
           </motion.div>
 
           <motion.div 
-            className="bg-card border border-border p-10"
+            className="bg-card border border-border p-6 sm:p-8 lg:p-10"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -136,20 +136,20 @@ export default function AboutSection({ language }: AboutSectionProps) {
             whileHover={{ scale: 1.02, borderColor: 'hsl(var(--primary))' }}
           >
             <motion.div 
-              className="w-12 h-12 bg-primary/20 flex items-center justify-center mb-6"
+              className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/20 flex items-center justify-center mb-4 sm:mb-6"
               initial={{ rotate: 180, scale: 0 }}
               whileInView={{ rotate: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Users className="w-6 h-6 text-primary" />
+              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
             </motion.div>
-            <h3 className="text-xl font-bold text-foreground mb-3">{c.team.title}</h3>
-            <p className="text-muted-foreground leading-relaxed text-sm">{c.team.description}</p>
+            <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 sm:mb-3">{c.team.title}</h3>
+            <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm">{c.team.description}</p>
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {c.values.map((value, index) => (
             <motion.div
               key={index}
@@ -164,7 +164,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
               whileHover={{ y: -5 }}
             >
               <motion.div 
-                className="w-10 h-10 bg-primary/20 flex items-center justify-center mx-auto mb-4"
+                className="w-9 h-9 sm:w-10 sm:h-10 bg-primary/20 flex items-center justify-center mx-auto mb-3 sm:mb-4"
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
@@ -178,10 +178,10 @@ export default function AboutSection({ language }: AboutSectionProps) {
                   backgroundColor: 'hsl(var(--primary) / 0.3)'
                 }}
               >
-                <value.icon className="w-5 h-5 text-primary" />
+                <value.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               </motion.div>
-              <h4 className="text-base font-semibold text-foreground mb-2">{value.title}</h4>
-              <p className="text-muted-foreground text-sm leading-relaxed">{value.description}</p>
+              <h4 className="text-sm sm:text-base font-semibold text-foreground mb-1 sm:mb-2">{value.title}</h4>
+              <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">{value.description}</p>
             </motion.div>
           ))}
         </div>

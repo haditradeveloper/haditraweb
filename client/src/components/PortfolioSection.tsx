@@ -161,33 +161,32 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
     : projects[language].filter(p => p.category === categoryMap[selectedCategory]);
 
   return (
-    <section id="portfolio" className="relative py-24 lg:py-32 bg-background border-t border-border overflow-hidden">
+    <section id="portfolio" className="relative py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border overflow-hidden">
       <BackgroundGraphics variant="portfolio" />
-      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-16">
-        <div className="text-center mb-16">
-          <p className="text-primary text-xs uppercase tracking-wider mb-4">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-16">
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+          <p className="text-primary text-xs uppercase tracking-wider mb-3 sm:mb-4">
             {language === 'en' ? 'Our Work' : 'أعمالنا'}
           </p>
-          <h2 className="text-3xl lg:text-4xl font-bold mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">
             <span className="text-foreground">
               {language === 'en' ? 'Showcase of Our Exceptional' : 'عرض استثنائي'}
             </span>
             <br />
-            <span className="gradient-text text-4xl lg:text-5xl font-extrabold">
+            <span className="gradient-text text-3xl sm:text-4xl lg:text-5xl font-extrabold">
               {language === 'en' ? 'PORTFOLIO' : 'المحفظة'}
             </span>
           </h2>
         </div>
 
-        {/* Category filter */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-12 lg:mb-16">
           {categories[language].map((category, index) => (
             <Button
               key={index}
               variant={selectedCategory === (categoryMap[category] || category.toLowerCase()) ? 'default' : 'outline'}
               data-testid={`button-category-${category.toLowerCase()}`}
               onClick={() => setSelectedCategory(categoryMap[category] || category.toLowerCase())}
-              className={`rounded-none text-sm ${
+              className={`rounded-none text-xs sm:text-sm ${
                 selectedCategory === (categoryMap[category] || category.toLowerCase())
                   ? 'bg-primary text-primary-foreground border-primary'
                   : 'border-border text-muted-foreground hover:text-foreground'
@@ -198,8 +197,7 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
           ))}
         </div>
 
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
@@ -207,25 +205,25 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
               className="group bg-card border border-border hover:border-primary cursor-pointer transition-all duration-300"
               onClick={() => setSelectedProject(project)}
             >
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-40 sm:h-48 overflow-hidden">
                 <img 
                   src={project.image} 
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   style={{ filter: 'brightness(0.6)' }}
                 />
-                <div className="absolute top-3 left-3">
-                  <Badge className="bg-primary text-primary-foreground border-0 text-xs">
+                <div className="absolute top-2 sm:top-3 left-2 sm:left-3">
+                  <Badge className="bg-primary text-primary-foreground border-0 text-[10px] sm:text-xs">
                     {project.category}
                   </Badge>
                 </div>
               </div>
-              <div className="p-5">
-                <h3 className="text-base font-bold text-foreground mb-2">{project.title}</h3>
-                <p className="text-muted-foreground text-xs mb-3 leading-relaxed">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
+              <div className="p-4 sm:p-5">
+                <h3 className="text-sm sm:text-base font-bold text-foreground mb-1 sm:mb-2">{project.title}</h3>
+                <p className="text-muted-foreground text-xs mb-2 sm:mb-3 leading-relaxed">{project.description}</p>
+                <div className="flex flex-wrap gap-1 sm:gap-2">
                   {project.tags.slice(0, 2).map((tag, i) => (
-                    <span key={i} className="text-xs text-muted-foreground">
+                    <span key={i} className="text-[10px] sm:text-xs text-muted-foreground">
                       {tag}
                     </span>
                   ))}
@@ -237,7 +235,7 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
       </div>
 
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm p-6" onClick={() => setSelectedProject(null)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm p-4 sm:p-6" onClick={() => setSelectedProject(null)}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -245,7 +243,7 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
             className="bg-card rounded-none max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative h-80">
+            <div className="relative h-48 sm:h-64 md:h-80">
               <img 
                 src={selectedProject.image} 
                 alt={selectedProject.title}
@@ -257,26 +255,26 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
                 variant="ghost"
                 data-testid="button-close-modal"
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 bg-background/90 hover:bg-background text-foreground border border-border"
+                className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-background/90 hover:bg-background text-foreground border border-border h-8 w-8 sm:h-10 sm:w-10"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             </div>
-            <div className="p-8">
-              <Badge className="bg-primary text-primary-foreground border-0 mb-4">
+            <div className="p-4 sm:p-6 lg:p-8">
+              <Badge className="bg-primary text-primary-foreground border-0 mb-3 sm:mb-4 text-xs">
                 {selectedProject.category}
               </Badge>
-              <h2 className="text-3xl font-semibold text-foreground mb-4">{selectedProject.title}</h2>
-              <p className="text-muted-foreground mb-6 text-lg leading-relaxed">{selectedProject.details}</p>
-              <div className="flex flex-wrap gap-2 mb-6">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-foreground mb-3 sm:mb-4">{selectedProject.title}</h2>
+              <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base lg:text-lg leading-relaxed">{selectedProject.details}</p>
+              <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
                 {selectedProject.tags.map((tag, i) => (
-                  <Badge key={i} variant="secondary" className="bg-primary/20 text-primary border border-primary/30">
+                  <Badge key={i} variant="secondary" className="bg-primary/20 text-primary border border-primary/30 text-xs">
                     {tag}
                   </Badge>
                 ))}
               </div>
-              <Button className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border border-primary/50 rounded-none">
-                <ExternalLink className="w-4 h-4" />
+              <Button className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground border border-primary/50 rounded-none text-xs sm:text-sm">
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                 {language === 'en' ? 'View Case Study' : 'عرض دراسة الحالة'}
               </Button>
             </div>

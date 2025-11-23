@@ -74,10 +74,10 @@ export default function Footer({ language }: FooterProps) {
 
   return (
     <footer className="bg-background text-foreground border-t border-border">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-12 sm:py-16 lg:py-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
           <div>
-            <div className="flex items-start gap-4 mb-4">
+            <div className="flex items-start gap-3 sm:gap-4 mb-4">
               <Logo 
                 size="xl" 
                 showGlow={false}
@@ -85,25 +85,25 @@ export default function Footer({ language }: FooterProps) {
                 className="flex-shrink-0 mt-1"
               />
               <div className="flex-1">
-                <h3 className="text-foreground font-semibold text-xl lg:text-2xl tracking-normal mb-1.5 leading-none">
+                <h3 className="text-foreground font-semibold text-lg sm:text-xl lg:text-2xl tracking-normal mb-1.5 leading-none">
                   HEDITRA
                 </h3>
-                <p className="text-muted-foreground text-[10px] lg:text-xs font-normal mb-2 tracking-[0.2em] uppercase">
+                <p className="text-muted-foreground text-[9px] sm:text-[10px] lg:text-xs font-normal mb-2 tracking-[0.2em] uppercase">
                   Technologies & Creative Design
                 </p>
               </div>
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">{c.description}</p>
+            <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">{c.description}</p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-lg mb-4 text-foreground">{c.quickLinks}</h4>
-            <ul className="space-y-3">
+            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-foreground">{c.quickLinks}</h4>
+            <ul className="space-y-2 sm:space-y-3">
               {c.links.map((link, index) => (
                 <li key={index}>
                   <button
                     data-testid={`link-footer-${link.id}`}
-                    className="text-muted-foreground hover:text-primary transition-colors text-sm hover-elevate px-2 py-1 rounded-none -ml-2"
+                    className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate px-2 py-1 rounded-none -ml-2"
                     onClick={() => scrollToSection(link.id)}
                   >
                     {link.label}
@@ -114,13 +114,13 @@ export default function Footer({ language }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="font-semibold text-lg mb-4 text-foreground">{c.services}</h4>
-            <ul className="space-y-3">
+            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-foreground">{c.services}</h4>
+            <ul className="space-y-2 sm:space-y-3">
               {c.serviceLinks.map((service, index) => (
                 <li key={index}>
                   <button
                     data-testid={`link-service-${index}`}
-                    className="text-muted-foreground hover:text-primary transition-colors text-sm hover-elevate px-2 py-1 rounded-none -ml-2"
+                    className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate px-2 py-1 rounded-none -ml-2"
                     onClick={() => scrollToSection(typeof service === 'string' ? 'services' : service.id)}
                   >
                     {typeof service === 'string' ? service : service.label}
@@ -131,31 +131,31 @@ export default function Footer({ language }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="font-semibold text-lg mb-4">{c.contact}</h4>
-            <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">{c.contact}</h4>
+            <ul className="space-y-3 sm:space-y-4">
+                <li className="flex items-start gap-2 sm:gap-3">
+                <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 flex-shrink-0" />
                 <a 
                   href="mailto:info@Heditra.com" 
                   data-testid="link-email"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm hover-elevate"
+                  className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate break-all"
                 >
                   info@Heditra.com
                 </a>
               </li>
-              <li className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+              <li className="flex items-start gap-2 sm:gap-3">
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 flex-shrink-0" />
                 <a 
                   href="tel:+971XXXXXXXX" 
                   data-testid="link-phone"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm hover-elevate"
+                  className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate"
                 >
                   +971 XX XXX XXXX
                 </a>
               </li>
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground text-sm">
+              <li className="flex items-start gap-2 sm:gap-3">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 flex-shrink-0" />
+                <span className="text-muted-foreground text-xs sm:text-sm">
                   {language === 'en' ? 'Dubai, UAE' : 'دبي، الإمارات'}
                 </span>
               </li>
@@ -163,21 +163,21 @@ export default function Footer({ language }: FooterProps) {
           </div>
         </div>
 
-        <div className="border-t border-border pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-muted-foreground text-sm">
+        <div className="border-t border-border pt-6 sm:pt-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+            <p className="text-muted-foreground text-xs sm:text-sm text-center sm:text-left">
               © 2024 {c.brand}. {c.copyright}
             </p>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6">
               <button
                 data-testid="link-privacy"
-                className="text-muted-foreground hover:text-primary transition-colors text-sm hover-elevate px-2 py-1 rounded-none"
+                className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate px-2 py-1 rounded-none"
               >
                 {c.privacy}
               </button>
               <button
                 data-testid="link-terms"
-                className="text-muted-foreground hover:text-primary transition-colors text-sm hover-elevate px-2 py-1 rounded-none"
+                className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate px-2 py-1 rounded-none"
               >
                 {c.terms}
               </button>

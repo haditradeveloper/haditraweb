@@ -53,36 +53,36 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
   };
 
   return (
-    <section id="services" className="relative py-24 lg:py-32 bg-background border-t border-border overflow-hidden">
+    <section id="services" className="relative py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border overflow-hidden">
       <BackgroundGraphics variant="services" />
-      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-16">
         <motion.div 
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-primary text-xs uppercase tracking-wider mb-4">
+          <p className="text-primary text-xs uppercase tracking-wider mb-3 sm:mb-4">
             {language === 'en' ? 'Our Services' : 'خدماتنا'}
           </p>
-          <h2 className="text-3xl lg:text-4xl font-bold mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">
             <span className="text-foreground">
               {language === 'en' ? 'Explore Our Range of' : 'استكشف مجموعة'}
             </span>
             <br />
-            <span className="gradient-text text-4xl lg:text-5xl font-extrabold">
+            <span className="gradient-text text-3xl sm:text-4xl lg:text-5xl font-extrabold">
               {language === 'en' ? 'SERVICES' : 'الخدمات'}
             </span>
           </h2>
         </motion.div>
 
-        <div className="space-y-16">
+        <div className="space-y-12 sm:space-y-14 lg:space-y-16">
           {services[language].map((service, index) => (
             <motion.div
               key={index}
               data-testid={`service-card-${index}`}
-              className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12"
+              className="flex flex-col lg:flex-row items-start gap-6 sm:gap-8 lg:gap-12"
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -93,7 +93,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
               whileHover={{ x: index % 2 === 0 ? -5 : 5 }}
             >
               <motion.div 
-                className="w-16 h-16 bg-primary flex items-center justify-center flex-shrink-0"
+                className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-primary flex items-center justify-center flex-shrink-0"
                 initial={{ scale: 0, rotate: -180 }}
                 whileInView={{ scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
@@ -109,18 +109,18 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
                   transition: { duration: 0.2 }
                 }}
               >
-                <service.icon className="w-8 h-8 text-primary-foreground" />
+                <service.icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-primary-foreground" />
               </motion.div>
 
               <div className="flex-1">
                 <motion.h3 
-                  className="text-2xl font-semibold mb-3"
+                  className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-3"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.2 + 0.3 }}
                 >
-                  <span className="text-primary/70 text-lg font-light">
+                  <span className="text-primary/70 text-base sm:text-lg font-light">
                     {String(index + 1).padStart(2, '0')} -
                   </span>
                   {' '}
@@ -133,7 +133,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
                   </span>
                 </motion.h3>
                 <motion.p 
-                  className="text-muted-foreground mb-6 leading-relaxed"
+                  className="text-muted-foreground mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
@@ -143,7 +143,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
                 </motion.p>
 
                 <motion.div 
-                  className="flex flex-wrap gap-3 mb-6"
+                  className="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
@@ -152,7 +152,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
                   {service.features.map((feature, i) => (
                     <motion.span 
                       key={i} 
-                      className="text-sm text-muted-foreground"
+                      className="text-xs sm:text-sm text-muted-foreground"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}

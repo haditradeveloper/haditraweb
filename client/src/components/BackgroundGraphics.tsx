@@ -8,9 +8,8 @@ interface BackgroundGraphicsProps {
 export default function BackgroundGraphics({ variant = 'default', className = '' }: BackgroundGraphicsProps) {
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
-      {/* Glossy Amorphous 3D Object */}
       <motion.div
-        className="absolute top-1/2 right-1/4 w-96 h-96 md:w-[500px] md:h-[500px] opacity-30"
+        className="absolute top-1/2 right-1/4 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] opacity-30"
         style={{
           background: 'radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 0.5), rgba(16, 185, 129, 0.5), rgba(59, 130, 246, 0.4), rgba(236, 72, 153, 0.3))',
           borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%',
@@ -37,7 +36,7 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
       {/* Glowing Concentric Circles (Target/Radar Effect) */}
       {variant === 'services' && (
         <motion.div
-          className="absolute top-1/2 right-1/3 w-80 h-80 md:w-96 md:h-96"
+          className="absolute top-1/2 right-1/3 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
           transition={{ duration: 2 }}
@@ -85,7 +84,7 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
       {/* Glowing Eye Graphic */}
       {variant === 'services' && (
         <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 md:w-80 md:h-80"
+          className="absolute top-1/4 left-1/4 w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.3 }}
           transition={{ duration: 2 }}
@@ -107,9 +106,8 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
               ease: 'easeInOut',
             }}
           />
-          {/* Iris */}
           <motion.div
-            className="absolute top-1/2 left-1/2 w-32 h-32 md:w-40 md:h-40 rounded-full -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-1/2 left-1/2 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full -translate-x-1/2 -translate-y-1/2"
             style={{
               background: 'radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.8), rgba(236, 72, 153, 0.6))',
               boxShadow: '0 0 40px rgba(59, 130, 246, 0.6), inset 0 0 20px rgba(236, 72, 153, 0.4)',
@@ -123,9 +121,8 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
               ease: 'linear',
             }}
           />
-          {/* Pupil */}
           <motion.div
-            className="absolute top-1/2 left-1/2 w-12 h-12 md:w-16 md:h-16 bg-black rounded-full -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-1/2 left-1/2 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 bg-black rounded-full -translate-x-1/2 -translate-y-1/2"
             style={{
               boxShadow: '0 0 20px rgba(59, 130, 246, 0.8), inset 0 0 10px rgba(59, 130, 246, 0.6)',
             }}
@@ -136,7 +133,7 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
       {/* Wireframe Rocket/Spacecraft */}
       {variant === 'portfolio' && (
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-64 h-96 md:w-80 md:h-[500px]"
+          className="absolute bottom-1/4 right-1/4 w-40 h-64 sm:w-56 sm:h-80 md:w-64 md:h-96 lg:w-80 lg:h-[500px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
           transition={{ duration: 2 }}
@@ -252,9 +249,8 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
         </div>
       )}
 
-      {/* Additional Glowing Orbs */}
       <motion.div
-        className="absolute top-1/4 right-1/3 w-32 h-32 md:w-48 md:h-48 rounded-full opacity-20"
+        className="absolute top-1/4 right-1/3 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 rounded-full opacity-20"
         style={{
           background: 'radial-gradient(circle, rgba(16, 185, 129, 0.6), transparent)',
           filter: 'blur(40px)',
@@ -272,7 +268,7 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
       />
 
       <motion.div
-        className="absolute bottom-1/3 left-1/4 w-24 h-24 md:w-36 md:h-36 rounded-full opacity-15"
+        className="absolute bottom-1/3 left-1/4 w-16 h-16 sm:w-24 sm:h-24 md:w-36 md:h-36 rounded-full opacity-15"
         style={{
           background: 'radial-gradient(circle, rgba(236, 72, 153, 0.5), transparent)',
           filter: 'blur(30px)',

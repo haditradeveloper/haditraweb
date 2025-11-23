@@ -137,12 +137,11 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
   return (
     <section 
       id="home"
-      className="relative w-full h-screen overflow-hidden bg-background flex"
+      className="relative w-full h-screen overflow-hidden bg-background flex flex-col lg:flex-row"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
-      {/* Left Section - Wide (70-75%) with Image */}
-      <div className="flex-1 relative">
+      <div className="flex-1 relative min-h-[60vh] lg:min-h-0">
         {/* Abstract Background Graphics */}
         <BackgroundGraphics variant="hero" className="z-0" />
         
@@ -180,8 +179,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           </motion.div>
         </AnimatePresence>
 
-        {/* Content overlay on left */}
-        <div className="absolute inset-0 flex items-center px-8 lg:px-16 xl:px-24 z-30">
+        <div className="absolute inset-0 flex items-center px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 z-30">
           <div className="max-w-2xl">
             <AnimatePresence mode="wait">
               <motion.div
@@ -195,7 +193,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-muted-foreground text-sm mb-4 uppercase tracking-wider"
+                  className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4 uppercase tracking-wider"
                 >
                   {language === 'en' ? 'Hi there! this is' : 'مرحباً! هذا هو'}
                 </motion.p>
@@ -203,10 +201,10 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.6 }}
-                  className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 leading-[1.1] tracking-tight"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground mb-3 sm:mb-4 leading-[1.1] tracking-tight"
                 >
                   <motion.span 
-                    className="block mb-2"
+                    className="block mb-1 sm:mb-2"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
@@ -226,7 +224,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.5 }}
-                  className="text-muted-foreground text-base mb-8 leading-relaxed max-w-xl"
+                  className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed max-w-xl"
                 >
                   {content.description}
                 </motion.p>
@@ -238,12 +236,12 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                   <Button
                     size="lg"
                     data-testid="button-hero-primary"
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-sm font-medium rounded-none transition-colors duration-200 group"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 sm:py-4 text-xs sm:text-sm font-medium rounded-none transition-colors duration-200 group"
                     onClick={() => scrollToSection('portfolio')}
                   >
                     <span className="flex items-center gap-2">
                       {language === 'en' ? 'View Our Work' : 'شاهد أعمالنا'}
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </Button>
                 </motion.div>
@@ -254,9 +252,8 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
 
       </div>
 
-      {/* Right Sidebar - Services & CTA Only */}
       <motion.div 
-        className="w-full lg:w-1/4 bg-background/95 backdrop-blur-sm border-l border-border px-10 pt-20 pb-10 flex flex-col justify-between relative z-20 overflow-hidden"
+        className="w-full lg:w-1/4 bg-background/95 backdrop-blur-sm border-t lg:border-t-0 lg:border-l border-border px-6 sm:px-8 md:px-10 pt-8 sm:pt-12 lg:pt-20 pb-6 sm:pb-8 lg:pb-10 flex flex-col justify-between relative z-20 overflow-hidden"
         initial={{ opacity: 0, x: 50, scale: 0.95 }}
         animate={{ opacity: 1, x: 0, scale: 1 }}
         transition={{ 
@@ -360,10 +357,9 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           }}
         />
 
-        {/* Services List */}
         <div className="relative z-10 text-left">
           <motion.h3 
-            className="text-foreground font-medium mb-6 text-xs uppercase tracking-wider text-muted-foreground relative"
+            className="text-foreground font-medium mb-4 sm:mb-6 text-xs uppercase tracking-wider text-muted-foreground relative"
             initial={{ opacity: 0, y: -20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ 
@@ -382,11 +378,11 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
               transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
             />
           </motion.h3>
-          <ul className="space-y-3 mt-2">
+          <ul className="space-y-2 sm:space-y-3 mt-2">
             {services[language].slice(0, 4).map((service, index) => (
               <motion.li 
                   key={index} 
-                  className="relative text-muted-foreground text-sm cursor-pointer group text-left"
+                  className="relative text-muted-foreground text-xs sm:text-sm cursor-pointer group text-left"
                   initial={{ opacity: 0, x: -30, scale: 0.9 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   transition={{ 
@@ -444,7 +440,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           >
             <Button
               variant="ghost"
-              className="mb-6 text-foreground hover:text-primary p-0 h-auto font-normal text-sm group relative overflow-hidden"
+              className="mb-4 sm:mb-6 text-foreground hover:text-primary p-0 h-auto font-normal text-xs sm:text-sm group relative overflow-hidden"
               onClick={() => onOpenChatbot?.()}
             >
               <motion.span
@@ -468,7 +464,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
             </Button>
           </motion.div>
           <motion.p 
-            className="text-muted-foreground text-xs leading-relaxed"
+            className="text-muted-foreground text-[10px] sm:text-xs leading-relaxed"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -484,8 +480,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
         </motion.div>
       </motion.div>
 
-      {/* Simple slide indicators - Centered across entire section */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-1.5">
+      <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-1.5">
         {slides.map((_, index) => (
           <button
             key={index}
