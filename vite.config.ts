@@ -1,7 +1,10 @@
 import { defineConfig, type UserConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { fileURLToPath } from "url";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const getReplitPlugins = async () => {
   if (process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined) {
@@ -27,45 +30,28 @@ export default defineConfig(async (): Promise<UserConfig> => {
     ],
     resolve: {
       alias: {
-        "@": path.resolve(import.meta.dirname, "client", "src"),
-        "@shared": path.resolve(import.meta.dirname, "shared"),
-        "@assets": path.resolve(import.meta.dirname, "public"),
+        "@": path.resolve(__dirname, "client", "src"),
+        "@shared": path.resolve(__dirname, "shared"),
+        "@assets": path.resolve(__dirname, "public"),
       },
     },
-    root: path.resolve(import.meta.dirname, "client"),
+    root: path.resolve(__dirname, "client"),
     base: '/',
     build: {
-      outDir: path.resolve(import.meta.dirname, "dist/public"),
+      outDir: path.resolve(__dirname, "dist/public"),
       emptyOutDir: true,
       minify: 'esbuild',
       cssMinify: true,
       sourcemap: false,
       rollupOptions: {
         output: {
-          manualChunks(id: string) {
-            if (id.includes('node_modules')) {
-              if (id.includes('react') || id.includes('react-dom') || id.includes('react/jsx-runtime')) {
-                return undefined;
-              }
-              if (id.includes('framer-motion')) {
-                return 'framer-motion';
-              }
-              if (id.includes('@radix-ui')) {
-                return 'radix-ui';
-              }
-              if (id.includes('lucide-react')) {
-                return 'lucide-icons';
-              }
-              return 'vendor';
-            }
-          },
           assetFileNames: 'assets/[name]-[hash][extname]',
           chunkFileNames: 'assets/[name]-[hash].js',
           entryFileNames: 'assets/[name]-[hash].js',
         },
       },
       chunkSizeWarningLimit: 1000,
-      target: 'esnext',
+      target: 'es2015',
     },
     server: {
       fs: {
