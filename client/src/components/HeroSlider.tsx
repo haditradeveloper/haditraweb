@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { type Language } from '@/lib/i18n';
 import BackgroundGraphics from '@/components/BackgroundGraphics';
@@ -252,21 +252,6 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           </div>
         </div>
 
-        {/* Simple slide indicators */}
-        <div className="absolute bottom-8 left-8 z-40 flex gap-1.5">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              data-testid={`button-slide-${index}`}
-              onClick={() => setCurrentIndex(index)}
-              className={`transition-all duration-200 ${
-                index === currentIndex 
-                  ? 'w-10 h-0.5 bg-primary' 
-                  : 'w-6 h-0.5 bg-muted-foreground/50 hover:bg-muted-foreground'
-              }`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Right Sidebar - Services & CTA Only */}
@@ -399,7 +384,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           </motion.h3>
           <ul className="space-y-3 mt-2">
             {services[language].slice(0, 4).map((service, index) => (
-                <motion.li 
+              <motion.li 
                   key={index} 
                   className="relative text-muted-foreground text-sm cursor-pointer group text-left"
                   initial={{ opacity: 0, x: -30, scale: 0.9 }}
@@ -498,6 +483,22 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           </motion.p>
         </motion.div>
       </motion.div>
+
+      {/* Simple slide indicators - Centered across entire section */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-1.5">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            data-testid={`button-slide-${index}`}
+            onClick={() => setCurrentIndex(index)}
+            className={`transition-all duration-200 ${
+              index === currentIndex 
+                ? 'w-10 h-0.5 bg-primary' 
+                : 'w-6 h-0.5 bg-muted-foreground/50 hover:bg-muted-foreground'
+            }`}
+          />
+        ))}
+      </div>
     </section>
   );
 }
