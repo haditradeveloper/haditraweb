@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useMemo, useCallback } from 'react';
 import { Code, Brain, Camera, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { type Language } from '@/lib/i18n';
@@ -8,8 +9,28 @@ interface ServicesSectionProps {
   language: Language;
 }
 
+interface Service {
+  icon: typeof Code;
+  title: string;
+  description: string;
+  features: string[];
+}
+
+const scrollToContact = (): void => {
+  const element = document.getElementById('contact');
+  if (element) {
+    const offset = 56;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+};
+
 export default function ServicesSection({ language }: ServicesSectionProps) {
-  const services = {
+  const services: Record<Language, Service[]> = {
     en: [
       {
         icon: Code,
@@ -52,6 +73,8 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
     ]
   };
 
+  const currentServices = useMemo(() => services[language], [language]);
+
   return (
     <section id="services" className="relative py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border overflow-hidden">
       <BackgroundGraphics variant="services" />
@@ -70,7 +93,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
             <span className="text-foreground">
               {language === 'en' ? 'Explore Our Range of' : 'استكشف مجموعة'}
             </span>
-            <br />
+            {' '}
             <span className="gradient-text text-3xl sm:text-4xl lg:text-5xl font-extrabold">
               {language === 'en' ? 'SERVICES' : 'الخدمات'}
             </span>
@@ -78,7 +101,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
         </motion.div>
 
         <div className="space-y-12 sm:space-y-14 lg:space-y-16">
-          {services[language].map((service, index) => (
+          {currentServices.map((service, index) => (
             <motion.div
               key={index}
               data-testid={`service-card-${index}`}
@@ -113,12 +136,8 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
               </motion.div>
 
               <div className="flex-1">
-                <motion.h3 
+                <h3 
                   className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-3"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 + 0.3 }}
                 >
                   <span className="text-primary/70 text-base sm:text-lg font-light">
                     {String(index + 1).padStart(2, '0')} -
@@ -131,7 +150,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
                   <span className="gradient-text font-extrabold">
                     {service.title.split(' ').slice(-1)[0].toUpperCase()}
                   </span>
-                </motion.h3>
+                </h3>
                 <motion.p 
                   className="text-muted-foreground mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base"
                   initial={{ opacity: 0 }}
@@ -175,18 +194,7 @@ export default function ServicesSection({ language }: ServicesSectionProps) {
                   variant="ghost"
                   data-testid={`button-service-${index}`}
                   className="text-primary hover:text-primary/80 p-0 h-auto font-medium text-xs group/btn"
-                  onClick={() => {
-                    const element = document.getElementById('contact');
-                    if (element) {
-                      const offset = 56;
-                      const elementPosition = element.getBoundingClientRect().top;
-                      const offsetPosition = elementPosition + window.pageYOffset - offset;
-                      window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                      });
-                    }
-                  }}
+                  onClick={scrollToContact}
                 >
                   {language === 'en' ? 'Learn More' : 'اعرف المزيد'}
                   <ArrowRight className="w-3 h-3 ml-1 group-hover/btn:translate-x-1 transition-transform" />

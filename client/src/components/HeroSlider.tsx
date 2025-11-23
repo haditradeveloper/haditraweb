@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,7 @@ interface HeroSliderProps {
   onOpenChatbot?: () => void;
 }
 
-const NAVIGATION_OFFSET = 48; // Navigation bar height
+const NAVIGATION_OFFSET = 48;
 
 const slides = [
   { id: 1, image: slide1, key: 'slide1' },
@@ -24,7 +24,7 @@ const slides = [
   { id: 4, image: slide4, key: 'slide4' }
 ];
 
-export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps) {
+const HeroSlider = memo(function HeroSlider({ language, onOpenChatbot }: HeroSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -120,10 +120,22 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
     ]
   };
 
-  const content = slideContent[language][currentIndex];
+  const content = useMemo(() => slideContent[language][currentIndex], [language, currentIndex]);
 
-  const scrollToSection = useCallback((id: string) => {
-    const element = document.getElementById(id);
+  const handleMouseEnter = useCallback(() => setIsAutoPlaying(false), []);
+  const handleMouseLeave = useCallback(() => setIsAutoPlaying(true), []);
+
+  const sectionCacheRef = useRef<Map<string, HTMLElement>>(new Map());
+
+  const scrollToSection = useCallback((id: string): void => {
+    if (typeof document === 'undefined') return;
+    let element = sectionCacheRef.current.get(id);
+    if (!element) {
+      element = document.getElementById(id);
+      if (element) {
+        sectionCacheRef.current.set(id, element);
+      }
+    }
     if (element) {
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - NAVIGATION_OFFSET;
@@ -138,45 +150,47 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
     <section 
       id="home"
       className="relative w-full h-screen overflow-hidden bg-background flex flex-col lg:flex-row"
-      onMouseEnter={() => setIsAutoPlaying(false)}
-      onMouseLeave={() => setIsAutoPlaying(true)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="flex-1 relative min-h-[60vh] lg:min-h-0">
-        {/* Abstract Background Graphics */}
         <BackgroundGraphics variant="hero" className="z-0" />
-        
         <AnimatePresence mode="wait">
-          <motion.div
+          <motion.figure
             key={currentIndex}
             initial={{ opacity: 0, scale: 1.1 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 1.2 }}
-            className="absolute inset-0 z-10"
+            className="absolute inset-0 z-10 m-0"
           >
             <div className="absolute inset-0">
               <motion.img 
                 src={slides[currentIndex].image} 
-                alt={content.title}
+                alt={`${content.category}: ${content.title} - ${content.subtitle}`}
                 className="w-full h-full object-cover"
+                loading={currentIndex === 0 ? "eager" : "lazy"}
+                fetchPriority={currentIndex === 0 ? "high" : "auto"}
+                width="1920"
+                height="1080"
                 style={{ 
                   filter: 'brightness(0.3) contrast(1.2) saturate(0.8)',
+                  willChange: 'opacity',
                 }}
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
               />
-              {/* Animated primary color lighting overlay from right */}
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
+                aria-hidden="true"
               />
-              {/* Dark overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-transparent" aria-hidden="true" />
             </div>
-          </motion.div>
+          </motion.figure>
         </AnimatePresence>
 
         <div className="absolute inset-0 flex items-center px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 z-30">
@@ -197,10 +211,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                 >
                   {language === 'en' ? 'Hi there! this is' : 'مرحباً! هذا هو'}
                 </motion.p>
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
+                <h1
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground mb-3 sm:mb-4 leading-[1.1] tracking-tight"
                 >
                   <motion.span 
@@ -219,7 +230,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                   >
                     {content.subtitle}
                   </motion.span>
-                </motion.h1>
+                </h1>
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -264,111 +275,41 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           damping: 15
         }}
       >
-        {/* Animated background gradients - Multiple layers for depth */}
-        {/* Primary gradient layer with rotation */}
         <motion.div
           className="absolute inset-0"
           style={{
             background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(251, 191, 36, 0.1) 50%, rgba(59, 130, 246, 0.15) 100%)',
+            willChange: 'opacity',
           }}
           animate={{
-            rotate: [0, 360],
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2],
+            opacity: [0.2, 0.3, 0.2],
           }}
           transition={{
-            rotate: {
-              duration: 20,
-              repeat: Infinity,
-              ease: 'linear',
-            },
-            scale: {
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            },
-            opacity: {
-              duration: 6,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            },
+            duration: 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
           }}
+          aria-hidden="true"
         />
-
-        {/* Secondary gradient layer with pulsing effect */}
         <motion.div
           className="absolute inset-0"
           style={{
             background: 'radial-gradient(circle at 30% 70%, rgba(16, 185, 129, 0.2), rgba(251, 191, 36, 0.15), transparent 60%)',
           }}
           animate={{
-            x: [0, 30, -30, 0],
-            y: [0, -20, 20, 0],
-            scale: [1, 1.2, 0.9, 1],
-            opacity: [0.15, 0.3, 0.2, 0.15],
+            opacity: [0.15, 0.25, 0.15],
           }}
           transition={{
-            duration: 10,
+            duration: 12,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-        />
-
-        {/* Tertiary gradient layer with wave effect */}
-        <motion.div
-          className="absolute inset-0"
-          style={{
-            transformOrigin: 'center center',
-            background: 'linear-gradient(54.46deg, transparent 0%, rgba(58, 133, 241, 0.1) 25%, rgba(230, 76, 159, 0.1) 50%, rgba(56, 181, 130, 0.1) 75%, transparent 100%)',
-          }}
-          animate={{
-            rotate: [0, 360],
-            opacity: [0.1, 0.25, 0.1],
-          }}
-          transition={{
-            rotate: {
-              duration: 20,
-              repeat: Infinity,
-              ease: 'linear',
-            },
-            opacity: {
-              duration: 6,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            },
-          }}
-        />
-
-        {/* Accent gradient overlay with shimmer */}
-        <motion.div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.15) 50%, transparent 100%)',
-          }}
-          animate={{
-            x: ['-100%', '200%'],
-            opacity: [0, 0.3, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            repeatDelay: 2,
-          }}
+          aria-hidden="true"
         />
 
         <div className="relative z-10 text-left">
-          <motion.h3 
+          <h2 
             className="text-foreground font-medium mb-4 sm:mb-6 text-xs uppercase tracking-wider text-muted-foreground relative"
-            initial={{ opacity: 0, y: -20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ 
-              delay: 0.1, 
-              duration: 0.3,
-              type: "spring",
-              stiffness: 300,
-              damping: 20
-            }}
           >
             {language === 'en' ? 'Services' : 'الخدمات'}
             <motion.div
@@ -376,9 +317,10 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
+              aria-hidden="true"
             />
-          </motion.h3>
-          <ul className="space-y-2 sm:space-y-3 mt-2">
+          </h2>
+          <ul className="space-y-2 sm:space-y-3 mt-2" role="list">
             {services[language].slice(0, 4).map((service, index) => (
               <motion.li 
                   key={index} 
@@ -399,6 +341,8 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                   }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => scrollToSection('services')}
+                  style={{ willChange: 'transform, color' }}
+                  role="listitem"
                 >
                   <span className="relative z-10 block transition-colors duration-200">
                     {service}
@@ -408,19 +352,20 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                     initial={{ width: 0, opacity: 0 }}
                     whileHover={{ width: "100%", opacity: 1 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
+                    aria-hidden="true"
                   />
                   <motion.div
                     className="absolute -left-2 top-1/2 w-1 h-1 rounded-full bg-primary -translate-y-1/2"
                     initial={{ opacity: 0, scale: 0 }}
                     whileHover={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.2 }}
+                    aria-hidden="true"
                   />
                 </motion.li>
             ))}
           </ul>
         </div>
 
-        {/* Bottom CTA */}
         <motion.div
           className="relative z-10"
           initial={{ opacity: 0, y: 30, scale: 0.9 }}
@@ -480,7 +425,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
         </motion.div>
       </motion.div>
 
-      <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-1.5">
+      <nav className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 z-40 flex gap-1.5" aria-label="Slide navigation">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -491,9 +436,13 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                 ? 'w-10 h-0.5 bg-primary' 
                 : 'w-6 h-0.5 bg-muted-foreground/50 hover:bg-muted-foreground'
             }`}
+            aria-label={`Go to slide ${index + 1}`}
+            aria-current={index === currentIndex ? 'true' : undefined}
           />
         ))}
-      </div>
+      </nav>
     </section>
   );
-}
+});
+
+export default HeroSlider;

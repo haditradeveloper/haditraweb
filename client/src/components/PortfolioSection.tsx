@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, memo } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,20 +11,19 @@ interface PortfolioSectionProps {
 }
 
 interface Project {
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  image: string;
-  tags: string[];
-  details: string;
+  readonly id: number;
+  readonly title: string;
+  readonly category: string;
+  readonly description: string;
+  readonly image: string;
+  readonly tags: readonly string[];
+  readonly details: string;
 }
 
-export default function PortfolioSection({ language }: PortfolioSectionProps) {
+const PortfolioSection = memo(function PortfolioSection({ language }: PortfolioSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  // Reset category filter when language changes to prevent empty results
   useEffect(() => {
     setSelectedCategory('all');
   }, [language]);
@@ -149,16 +148,18 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
     ]
   };
 
-  const categoryMap: { [key: string]: string } = {
+  const categoryMap: Readonly<Record<string, string>> = {
     'All': 'all', 'الكل': 'all',
     'Software': 'Software', 'البرمجيات': 'Software',
     'AI': 'AI', 'الذكاء الاصطناعي': 'AI',
     'Creative': 'Creative', 'الإبداعي': 'Creative'
   };
 
-  const filteredProjects = selectedCategory === 'all'
-    ? projects[language]
-    : projects[language].filter(p => p.category === categoryMap[selectedCategory]);
+  const filteredProjects = useMemo(() => {
+    return selectedCategory === 'all'
+      ? projects[language]
+      : projects[language].filter(p => p.category === categoryMap[selectedCategory]);
+  }, [selectedCategory, language]);
 
   return (
     <section id="portfolio" className="relative py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border overflow-hidden">
@@ -205,11 +206,14 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
               className="group bg-card border border-border hover:border-primary cursor-pointer transition-all duration-300"
               onClick={() => setSelectedProject(project)}
             >
-              <div className="relative h-40 sm:h-48 overflow-hidden">
+              <figure className="relative h-40 sm:h-48 overflow-hidden m-0">
                 <img 
                   src={project.image} 
-                  alt={project.title}
+                  alt={`${project.title} - ${project.category} project: ${project.description}`}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  width="800"
+                  height="600"
                   style={{ filter: 'brightness(0.6)' }}
                 />
                 <div className="absolute top-2 sm:top-3 left-2 sm:left-3">
@@ -217,7 +221,7 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
                     {project.category}
                   </Badge>
                 </div>
-              </div>
+              </figure>
               <div className="p-4 sm:p-5">
                 <h3 className="text-sm sm:text-base font-bold text-foreground mb-1 sm:mb-2">{project.title}</h3>
                 <p className="text-muted-foreground text-xs mb-2 sm:mb-3 leading-relaxed">{project.description}</p>
@@ -235,7 +239,13 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
       </div>
 
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm p-4 sm:p-6" onClick={() => setSelectedProject(null)}>
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-sm p-4 sm:p-6" 
+          onClick={() => setSelectedProject(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-modal-title"
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -243,11 +253,14 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
             className="bg-card rounded-none max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative h-48 sm:h-64 md:h-80">
+            <figure className="relative h-48 sm:h-64 md:h-80 m-0">
               <img 
                 src={selectedProject.image} 
-                alt={selectedProject.title}
+                alt={`${selectedProject.title} - ${selectedProject.category}: ${selectedProject.details}`}
+                loading="lazy"
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 style={{ filter: 'brightness(0.7)' }}
               />
               <Button
@@ -259,12 +272,12 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
               >
                 <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
-            </div>
-            <div className="p-4 sm:p-6 lg:p-8">
+            </figure>
+            <article className="p-4 sm:p-6 lg:p-8">
               <Badge className="bg-primary text-primary-foreground border-0 mb-3 sm:mb-4 text-xs">
                 {selectedProject.category}
               </Badge>
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-foreground mb-3 sm:mb-4">{selectedProject.title}</h2>
+              <h2 id="project-modal-title" className="text-xl sm:text-2xl lg:text-3xl font-semibold text-foreground mb-3 sm:mb-4">{selectedProject.title}</h2>
               <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base lg:text-lg leading-relaxed">{selectedProject.details}</p>
               <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
                 {selectedProject.tags.map((tag, i) => (
@@ -277,10 +290,12 @@ export default function PortfolioSection({ language }: PortfolioSectionProps) {
                 <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                 {language === 'en' ? 'View Case Study' : 'عرض دراسة الحالة'}
               </Button>
-            </div>
+            </article>
           </motion.div>
         </div>
       )}
     </section>
   );
-}
+});
+
+export default PortfolioSection;

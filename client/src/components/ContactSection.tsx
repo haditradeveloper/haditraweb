@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,23 @@ import { type Language } from '@/lib/i18n';
 interface ContactSectionProps {
   language: Language;
 }
+
+const sanitizeInput = (input: string): string => {
+  if (typeof input !== 'string') return '';
+  return input.trim().replace(/[<>]/g, '').slice(0, 2000);
+};
+
+const validateEmail = (email: string): boolean => {
+  if (typeof email !== 'string' || !email) return false;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const validatePhone = (phone: string): boolean => {
+  if (!phone || typeof phone !== 'string') return true;
+  const phoneRegex = /^[\d\s\+\-\(\)]+$/;
+  return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 7;
+};
 
 export default function ContactSection({ language }: ContactSectionProps) {
   const { toast } = useToast();
@@ -64,12 +81,30 @@ export default function ContactSection({ language }: ContactSectionProps) {
     }
   };
 
-  const c = content[language];
+  const c = useMemo(() => content[language], [language]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const contactItems = useMemo(() => [
+    { icon: Mail, title: language === 'en' ? 'Email' : 'البريد الإلكتروني', content: c.contact.email, href: `mailto:${c.contact.email}` },
+    { icon: Phone, title: language === 'en' ? 'Phone' : 'الهاتف', content: c.contact.phone, href: `tel:${c.contact.phone.replace(/\s/g, '')}` },
+    { icon: MapPin, title: language === 'en' ? 'Location' : 'الموقع', content: c.contact.location }
+  ], [language, c]);
+
+  const handleInputChange = useCallback((field: keyof typeof formData) => {
+    return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+      const value = sanitizeInput(e.target.value);
+      setFormData(prev => ({ ...prev, [field]: value }));
+    };
+  }, []);
+
+  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     
-    if (!formData.name || !formData.email || !formData.message) {
+    const sanitizedName = sanitizeInput(formData.name);
+    const sanitizedEmail = sanitizeInput(formData.email);
+    const sanitizedMessage = sanitizeInput(formData.message);
+    const sanitizedPhone = sanitizeInput(formData.phone);
+
+    if (!sanitizedName || !sanitizedEmail || !sanitizedMessage) {
       toast({
         title: language === 'en' ? 'Error' : 'خطأ',
         description: c.error,
@@ -78,9 +113,26 @@ export default function ContactSection({ language }: ContactSectionProps) {
       return;
     }
 
+    if (!validateEmail(sanitizedEmail)) {
+      toast({
+        title: language === 'en' ? 'Error' : 'خطأ',
+        description: language === 'en' ? 'Please enter a valid email address.' : 'يرجى إدخال عنوان بريد إلكتروني صحيح.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    if (sanitizedPhone && !validatePhone(sanitizedPhone)) {
+      toast({
+        title: language === 'en' ? 'Error' : 'خطأ',
+        description: language === 'en' ? 'Please enter a valid phone number.' : 'يرجى إدخال رقم هاتف صحيح.',
+        variant: 'destructive'
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate form submission
     setTimeout(() => {
       toast({
         title: language === 'en' ? 'Success!' : 'نجح!',
@@ -89,7 +141,7 @@ export default function ContactSection({ language }: ContactSectionProps) {
       setFormData({ name: '', email: '', phone: '', message: '' });
       setIsSubmitting(false);
     }, 1500);
-  };
+  }, [formData, language, c, toast]);
 
   return (
     <section id="contact" className="py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border">
@@ -107,12 +159,8 @@ export default function ContactSection({ language }: ContactSectionProps) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12">
-          <div className="space-y-4 sm:space-y-6">
-            {[
-              { icon: Mail, title: language === 'en' ? 'Email' : 'البريد الإلكتروني', content: c.contact.email, href: `mailto:${c.contact.email}` },
-              { icon: Phone, title: language === 'en' ? 'Phone' : 'الهاتف', content: c.contact.phone, href: `tel:${c.contact.phone.replace(/\s/g, '')}` },
-              { icon: MapPin, title: language === 'en' ? 'Location' : 'الموقع', content: c.contact.location }
-            ].map((item, index) => (
+          <address className="space-y-4 sm:space-y-6 not-italic">
+            {contactItems.map((item, index) => (
               <div
                 key={index}
                 className="flex items-start gap-3 sm:gap-4 pb-4 sm:pb-6 border-b border-border"
@@ -128,6 +176,7 @@ export default function ContactSection({ language }: ContactSectionProps) {
                     <a 
                       href={item.href}
                       className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm break-all"
+                      rel="noopener noreferrer"
                     >
                       {item.content}
                     </a>
@@ -137,9 +186,9 @@ export default function ContactSection({ language }: ContactSectionProps) {
                 </div>
               </div>
             ))}
-          </div>
+          </address>
 
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6" aria-label="Contact form">
               <div>
                 <label className="block text-xs sm:text-sm font-medium text-foreground mb-1 sm:mb-2">
                   {c.form.name}
@@ -148,10 +197,11 @@ export default function ContactSection({ language }: ContactSectionProps) {
                   type="text"
                   data-testid="input-name"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={handleInputChange('name')}
                   placeholder={c.form.name}
                   className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground text-sm"
                   required
+                  maxLength={100}
                 />
               </div>
 
@@ -164,10 +214,12 @@ export default function ContactSection({ language }: ContactSectionProps) {
                     type="email"
                     data-testid="input-email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={handleInputChange('email')}
                     placeholder={c.form.email}
                     className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground text-sm"
                     required
+                    maxLength={255}
+                    autoComplete="email"
                   />
                 </div>
 
@@ -179,9 +231,11 @@ export default function ContactSection({ language }: ContactSectionProps) {
                     type="tel"
                     data-testid="input-phone"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={handleInputChange('phone')}
                     placeholder={c.form.phone}
                     className="w-full bg-background border-border text-foreground placeholder:text-muted-foreground text-sm"
+                    maxLength={20}
+                    autoComplete="tel"
                   />
                 </div>
               </div>
@@ -193,11 +247,12 @@ export default function ContactSection({ language }: ContactSectionProps) {
                 <Textarea
                   data-testid="input-message"
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={handleInputChange('message')}
                   placeholder={c.form.message}
                   rows={5}
                   className="w-full resize-none bg-background border-border text-foreground placeholder:text-muted-foreground text-sm"
                   required
+                  maxLength={2000}
                 />
               </div>
 

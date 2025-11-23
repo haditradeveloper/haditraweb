@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { motion } from 'framer-motion';
 import { type Language } from '@/lib/i18n';
 
@@ -12,42 +12,63 @@ function CountUpAnimation({ end, suffix = '' }: { end: number; suffix?: string }
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (isVisible) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
+        if (entry.isIntersecting) {
           setIsVisible(true);
         }
       },
       { threshold: 0.3 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+      observer.disconnect();
+    };
   }, [isVisible]);
 
   useEffect(() => {
     if (!isVisible) return;
 
     const duration = 2000;
-    const steps = 60;
+    const steps = 30;
     const stepValue = end / steps;
     const stepDuration = duration / steps;
 
     let current = 0;
-    const timer = setInterval(() => {
-      current += stepValue;
-      if (current >= end) {
-        setCount(end);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, stepDuration);
+    let rafId: number;
+    let startTime: number | null = null;
 
-    return () => clearInterval(timer);
+    const animate = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      current = end * progress;
+      
+      setCount(Math.floor(current));
+      
+      if (progress < 1) {
+        rafId = requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    rafId = requestAnimationFrame(animate);
+
+    return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, [end, isVisible]);
 
   return (
@@ -59,7 +80,7 @@ function CountUpAnimation({ end, suffix = '' }: { end: number; suffix?: string }
   );
 }
 
-export default function StatsSection({ language }: StatsSectionProps) {
+const StatsSection = memo(function StatsSection({ language }: StatsSectionProps) {
   const stats = {
     en: [
       { value: 500, suffix: '+', label: 'Projects Delivered' },
@@ -79,12 +100,13 @@ export default function StatsSection({ language }: StatsSectionProps) {
     <section className="py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border relative overflow-hidden">
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-primary/10 rounded-full blur-3xl"
+        style={{ willChange: 'transform, opacity' }}
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
+          scale: [1, 1.15, 1],
+          opacity: [0.3, 0.4, 0.3],
         }}
         transition={{
-          duration: 10,
+          duration: 15,
           repeat: Infinity,
           ease: "easeInOut"
         }}
@@ -123,4 +145,6 @@ export default function StatsSection({ language }: StatsSectionProps) {
       </div>
     </section>
   );
-}
+});
+
+export default StatsSection;

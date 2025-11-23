@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
+import { memo } from 'react';
 
 interface BackgroundGraphicsProps {
   variant?: 'hero' | 'services' | 'portfolio' | 'default';
   className?: string;
 }
 
-export default function BackgroundGraphics({ variant = 'default', className = '' }: BackgroundGraphicsProps) {
+const BackgroundGraphics = memo(function BackgroundGraphics({ variant = 'default', className = '' }: BackgroundGraphicsProps) {
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
       <motion.div
@@ -15,25 +16,19 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
           borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%',
           filter: 'blur(60px)',
           transform: 'perspective(1000px) rotateX(20deg) rotateY(-20deg)',
+          willChange: 'transform',
         }}
         animate={{
-          borderRadius: [
-            '40% 60% 70% 30% / 40% 50% 60% 50%',
-            '60% 40% 30% 70% / 50% 40% 50% 60%',
-            '30% 70% 60% 40% / 60% 50% 40% 50%',
-            '40% 60% 70% 30% / 40% 50% 60% 50%',
-          ],
-          scale: [1, 1.1, 0.95, 1],
-          rotate: [0, 5, -5, 0],
+          scale: [1, 1.05, 1],
         }}
         transition={{
-          duration: 20,
+          duration: 25,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
       />
 
-      {/* Glowing Concentric Circles (Target/Radar Effect) */}
+      {/* Glowing Concentric Circles (Target/Radar Effect) - Optimized */}
       {variant === 'services' && (
         <motion.div
           className="absolute top-1/2 right-1/3 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
@@ -41,39 +36,40 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
           animate={{ opacity: 0.4 }}
           transition={{ duration: 2 }}
         >
-          {[1, 2, 3, 4].map((ring) => (
+          {[1, 2, 3].map((ring) => (
             <motion.div
               key={ring}
               className="absolute inset-0 rounded-full border-2"
               style={{
                 borderColor: `rgba(251, 191, 36, ${0.6 / ring})`,
                 boxShadow: `0 0 ${ring * 20}px rgba(251, 191, 36, ${0.4 / ring})`,
+                willChange: 'transform',
               }}
               animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.6 / ring, 0.8 / ring, 0.6 / ring],
+                scale: [1, 1.15, 1],
+                opacity: [0.6 / ring, 0.7 / ring, 0.6 / ring],
               }}
               transition={{
-                duration: 3 + ring,
+                duration: 4 + ring,
                 repeat: Infinity,
                 ease: 'easeInOut',
-                delay: ring * 0.3,
+                delay: ring * 0.4,
               }}
             />
           ))}
-          {/* Center pointer */}
           <motion.div
             className="absolute top-1/2 left-1/2 w-2 h-2 bg-yellow-400 rounded-full"
             style={{
               transform: 'translate(-50%, -50%)',
               boxShadow: '0 0 20px rgba(251, 191, 36, 0.8)',
+              willChange: 'transform',
             }}
             animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.8, 1, 0.8],
+              scale: [1, 1.3, 1],
+              opacity: [0.8, 0.95, 0.8],
             }}
             transition={{
-              duration: 2,
+              duration: 3,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
@@ -111,12 +107,14 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
             style={{
               background: 'radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.8), rgba(236, 72, 153, 0.6))',
               boxShadow: '0 0 40px rgba(59, 130, 246, 0.6), inset 0 0 20px rgba(236, 72, 153, 0.4)',
+              willChange: 'transform',
+              transform: 'translate(-50%, -50%)',
             }}
             animate={{
               rotate: [0, 360],
             }}
             transition={{
-              duration: 20,
+              duration: 30,
               repeat: Infinity,
               ease: 'linear',
             }}
@@ -191,25 +189,26 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
             />
           </svg>
           {/* Particles */}
-          {[...Array(8)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-blue-400 rounded-full"
               style={{
-                left: `${50 + (i % 4) * 10}%`,
-                bottom: `${20 + Math.floor(i / 4) * 15}%`,
+                left: `${50 + (i % 3) * 10}%`,
+                bottom: `${20 + Math.floor(i / 3) * 15}%`,
                 boxShadow: '0 0 6px rgba(59, 130, 246, 0.8)',
+                willChange: 'transform, opacity',
               }}
               animate={{
-                y: [0, -100],
+                y: [0, -80],
                 opacity: [1, 0],
                 scale: [1, 0.5],
               }}
               transition={{
-                duration: 2 + i * 0.2,
+                duration: 3 + i * 0.3,
                 repeat: Infinity,
                 ease: 'easeOut',
-                delay: i * 0.3,
+                delay: i * 0.4,
               }}
             />
           ))}
@@ -224,22 +223,23 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
             className="w-full h-full"
             preserveAspectRatio="none"
           >
-            {[0, 1, 2].map((wave) => (
+            {[0, 1].map((wave) => (
               <motion.path
                 key={wave}
                 d={`M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`}
                 fill="none"
-                stroke={`rgba(${wave === 0 ? '16, 185, 129' : wave === 1 ? '59, 130, 246' : '251, 191, 36'}, 0.6)`}
+                stroke={`rgba(${wave === 0 ? '16, 185, 129' : '59, 130, 246'}, 0.6)`}
                 strokeWidth="2"
-                animate={{
-                  d: [
-                    `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
-                    `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? -20 : 20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
-                    `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
-                  ],
-                }}
+              style={{ willChange: 'transform' }}
+              animate={{
+                d: [
+                  `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
+                  `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? -20 : 20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
+                  `M 0 ${100 + wave * 30} Q 300 ${80 + wave * 30 + (wave % 2 === 0 ? 20 : -20)} 600 ${100 + wave * 30} T 1200 ${100 + wave * 30}`,
+                ],
+              }}
                 transition={{
-                  duration: 4 + wave,
+                  duration: 6 + wave,
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }}
@@ -254,14 +254,13 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
         style={{
           background: 'radial-gradient(circle, rgba(16, 185, 129, 0.6), transparent)',
           filter: 'blur(40px)',
+          willChange: 'transform',
         }}
         animate={{
-          scale: [1, 1.3, 1],
-          x: [0, 30, 0],
-          y: [0, -20, 0],
+          scale: [1, 1.2, 1],
         }}
         transition={{
-          duration: 8,
+          duration: 12,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
@@ -272,14 +271,13 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
         style={{
           background: 'radial-gradient(circle, rgba(236, 72, 153, 0.5), transparent)',
           filter: 'blur(30px)',
+          willChange: 'transform',
         }}
         animate={{
-          scale: [1, 1.4, 1],
-          x: [0, -25, 0],
-          y: [0, 15, 0],
+          scale: [1, 1.25, 1],
         }}
         transition={{
-          duration: 10,
+          duration: 15,
           repeat: Infinity,
           ease: 'easeInOut',
           delay: 1,
@@ -299,5 +297,7 @@ export default function BackgroundGraphics({ variant = 'default', className = ''
       />
     </div>
   );
-}
+});
+
+export default BackgroundGraphics;
 

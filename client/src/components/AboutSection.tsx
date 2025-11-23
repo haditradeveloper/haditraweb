@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useMemo } from 'react';
 import { Target, Users, Award, Zap } from 'lucide-react';
 import { type Language } from '@/lib/i18n';
 import BackgroundGraphics from '@/components/BackgroundGraphics';
@@ -7,8 +8,29 @@ interface AboutSectionProps {
   language: Language;
 }
 
+interface Value {
+  icon: typeof Target;
+  title: string;
+  description: string;
+}
+
+interface AboutContent {
+  subtitle: string;
+  title: string;
+  description: string;
+  mission: {
+    title: string;
+    text: string;
+  };
+  values: Value[];
+  team: {
+    title: string;
+    description: string;
+  };
+}
+
 export default function AboutSection({ language }: AboutSectionProps) {
-  const content = {
+  const content: Record<Language, AboutContent> = {
     en: {
       subtitle: 'About Us',
       title: 'Transforming Ideas Into Reality',
@@ -81,7 +103,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
     }
   };
 
-  const c = content[language];
+  const c = useMemo(() => content[language], [language]);
 
   return (
     <section id="about" className="relative py-16 sm:py-20 lg:py-24 xl:py-32 bg-background border-t border-border overflow-hidden">
@@ -141,6 +163,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
               whileInView={{ rotate: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              aria-hidden="true"
             >
               <Users className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
             </motion.div>

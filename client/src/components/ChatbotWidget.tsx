@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send } from 'lucide-react';
 import { type Language } from '@/lib/i18n';
@@ -17,6 +17,8 @@ interface Message {
   timestamp: Date;
 }
 
+const MAX_MESSAGES = 50; // Limit message history to prevent memory issues
+
 const getApiUrl = (): string => {
   if (typeof window === 'undefined') return '';
   const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -29,7 +31,7 @@ const getApiUrl = (): string => {
   return `${productionApiUrl}/api/chat`;
 };
 
-export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }: ChatbotWidgetProps) {
+const ChatbotWidget = memo(function ChatbotWidget({ language, isOpenExternal, onOpenChange }: ChatbotWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   
   // Use external control if provided, otherwise use internal state
@@ -57,14 +59,23 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const messagesRef = useRef<Message[]>(messages);
+  
+  // Keep ref in sync with state
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const scrollToBottom = useCallback(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    const timeoutId = setTimeout(scrollToBottom, 50);
+    return () => clearTimeout(timeoutId);
+  }, [messages, scrollToBottom]);
 
   useEffect(() => {
     if (currentIsOpen && inputRef.current) {
@@ -83,12 +94,18 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
     };
 
     const currentMessage = inputValue.trim();
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prev => {
+      const newMessages = [...prev, userMessage];
+      // Limit message history to prevent memory issues
+      return newMessages.slice(-MAX_MESSAGES);
+    });
     setInputValue('');
     setIsTyping(true);
 
     try {
-      const conversationHistory = messages
+      // Use ref to get current messages without causing re-renders
+      const currentMessages = messagesRef.current;
+      const conversationHistory = currentMessages
         .filter(msg => msg.id !== '1')
         .map(msg => ({
           role: msg.isUser ? 'user' as const : 'assistant' as const,
@@ -128,7 +145,11 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
         timestamp: new Date()
       };
 
-      setMessages(prev => [...prev, botResponse]);
+      setMessages(prev => {
+        const newMessages = [...prev, botResponse];
+        // Limit message history to prevent memory issues
+        return newMessages.slice(-MAX_MESSAGES);
+      });
     } catch (error: any) {
       const errorMessage = error?.message || 'Unknown error';
       const isNetworkError = errorMessage.includes('fetch') || errorMessage.includes('network') || errorMessage.includes('Failed') || errorMessage.includes('CORS') || errorMessage.includes('ERR_');
@@ -145,11 +166,15 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
         isUser: false,
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, fallbackResponse]);
+      setMessages(prev => {
+        const newMessages = [...prev, fallbackResponse];
+        // Limit message history to prevent memory issues
+        return newMessages.slice(-MAX_MESSAGES);
+      });
     } finally {
       setIsTyping(false);
     }
-  }, [inputValue, language, messages]);
+  }, [inputValue, language]);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -191,40 +216,39 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
             },
           }}
         >
-          {/* Animated glow effect */}
+          {/* Animated glow effect - reduced animation complexity */}
           <motion.div
             className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-accent to-primary opacity-75"
+            style={{ willChange: 'transform' }}
             animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.75, 0.4, 0.75],
-              rotate: [0, 180, 360],
+              scale: [1, 1.2, 1],
             }}
             transition={{
-              duration: 3,
+              duration: 4,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
-          {/* Additional pulsing ring */}
           <motion.div
             className="absolute inset-0 rounded-full border-2 border-primary/50"
+            style={{ willChange: 'transform' }}
             animate={{
-              scale: [1, 1.5, 1],
+              scale: [1, 1.3, 1],
               opacity: [0.5, 0, 0.5],
             }}
             transition={{
-              duration: 2,
+              duration: 3,
               repeat: Infinity,
               ease: 'easeOut',
             }}
           />
           <motion.div
+            style={{ willChange: 'transform' }}
             animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 5, -5, 0],
+              scale: [1, 1.05, 1],
             }}
             transition={{
-              duration: 2,
+              duration: 3,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
@@ -274,17 +298,17 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
               right: '1.5rem',
             }}
           >
-            {/* Animated background gradient */}
+            {/* Animated background gradient - reduced frequency */}
             <motion.div
               className="absolute inset-0 opacity-20"
               style={{
                 background: 'radial-gradient(circle at top right, rgba(16, 185, 129, 0.3), rgba(251, 191, 36, 0.2), transparent 70%)',
               }}
               animate={{
-                opacity: [0.2, 0.3, 0.2],
+                opacity: [0.2, 0.25, 0.2],
               }}
               transition={{
-                duration: 4,
+                duration: 6,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}
@@ -323,11 +347,12 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
                   }}
                 >
                   <motion.div
+                    style={{ willChange: 'transform' }}
                     animate={{
                       rotate: [0, 360],
                     }}
                     transition={{
-                      duration: 20,
+                      duration: 30,
                       repeat: Infinity,
                       ease: 'linear',
                     }}
@@ -397,10 +422,10 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
                           background: 'radial-gradient(circle at center, rgba(251, 191, 36, 0.3), transparent)',
                         }}
                         animate={{
-                          opacity: [0.2, 0.3, 0.2],
+                          opacity: [0.2, 0.25, 0.2],
                         }}
                         transition={{
-                          duration: 2,
+                          duration: 4,
                           repeat: Infinity,
                           ease: 'easeInOut',
                         }}
@@ -535,23 +560,24 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
                   {inputValue.trim() && (
                     <motion.div
                       className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-accent to-primary opacity-75"
+                      style={{ willChange: 'transform' }}
                       animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.75, 0.5, 0.75],
+                        scale: [1, 1.15, 1],
                       }}
                       transition={{
-                        duration: 2,
+                        duration: 3,
                         repeat: Infinity,
                         ease: 'easeInOut',
                       }}
                     />
                   )}
                   <motion.div
+                    style={{ willChange: 'transform' }}
                     animate={inputValue.trim() ? {
-                      rotate: [0, 10, -10, 0],
+                      rotate: [0, 5, -5, 0],
                     } : {}}
                     transition={{
-                      duration: 2,
+                      duration: 3,
                       repeat: Infinity,
                       ease: 'easeInOut',
                     }}
@@ -566,5 +592,7 @@ export default function ChatbotWidget({ language, isOpenExternal, onOpenChange }
       </AnimatePresence>
     </>
   );
-}
+});
+
+export default ChatbotWidget;
 

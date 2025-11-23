@@ -35,6 +35,10 @@ export default function Logo({ size = 'md', showGlow = true, className = '', onC
             }
           : {}
       }
+      style={{
+        ...(showGlow ? { willChange: 'filter' } : {}),
+        ...(onClick ? { cursor: 'pointer' } : {}),
+      }}
       transition={
         showGlow
           ? {
@@ -44,12 +48,13 @@ export default function Logo({ size = 'md', showGlow = true, className = '', onC
             }
           : { type: 'spring', stiffness: 300 }
       }
-      style={onClick ? { cursor: 'pointer' } : {}}
     >
       <img
         src={logoImage}
         alt="Heditra Logo"
         className={`${sizeClass} w-auto object-contain transition-all`}
+        loading="eager"
+        fetchPriority="high"
         style={{
           filter: 'brightness(1.1) contrast(1.1)',
         }}

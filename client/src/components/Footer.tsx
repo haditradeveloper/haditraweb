@@ -7,19 +7,21 @@ interface FooterProps {
   language: Language;
 }
 
+const scrollToSection = (id: string): void => {
+  if (typeof document === 'undefined') return;
+  const element = document.getElementById(id);
+  if (element) {
+    const offset = 56;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+};
+
 export default function Footer({ language }: FooterProps) {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 56;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   const content = {
     en: {
@@ -97,14 +99,15 @@ export default function Footer({ language }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-foreground">{c.quickLinks}</h4>
-            <ul className="space-y-2 sm:space-y-3">
+            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-foreground">{c.quickLinks}</h3>
+            <ul className="space-y-2 sm:space-y-3" role="list">
               {c.links.map((link, index) => (
-                <li key={index}>
+                <li key={index} role="listitem">
                   <button
                     data-testid={`link-footer-${link.id}`}
                     className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate px-2 py-1 rounded-none -ml-2"
                     onClick={() => scrollToSection(link.id)}
+                    aria-label={`Navigate to ${link.label} section`}
                   >
                     {link.label}
                   </button>
@@ -114,14 +117,15 @@ export default function Footer({ language }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-foreground">{c.services}</h4>
-            <ul className="space-y-2 sm:space-y-3">
+            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-foreground">{c.services}</h3>
+            <ul className="space-y-2 sm:space-y-3" role="list">
               {c.serviceLinks.map((service, index) => (
-                <li key={index}>
+                <li key={index} role="listitem">
                   <button
                     data-testid={`link-service-${index}`}
                     className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate px-2 py-1 rounded-none -ml-2"
                     onClick={() => scrollToSection(typeof service === 'string' ? 'services' : service.id)}
+                    aria-label={`Navigate to ${typeof service === 'string' ? service : service.label} service`}
                   >
                     {typeof service === 'string' ? service : service.label}
                   </button>
@@ -131,14 +135,15 @@ export default function Footer({ language }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">{c.contact}</h4>
-            <ul className="space-y-3 sm:space-y-4">
+            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">{c.contact}</h3>
+            <address className="space-y-3 sm:space-y-4 not-italic">
                 <li className="flex items-start gap-2 sm:gap-3">
                 <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-primary mt-0.5 flex-shrink-0" />
                 <a 
                   href="mailto:info@Heditra.com" 
                   data-testid="link-email"
                   className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate break-all"
+                  rel="noopener noreferrer"
                 >
                   info@Heditra.com
                 </a>
@@ -149,6 +154,7 @@ export default function Footer({ language }: FooterProps) {
                   href="tel:+971XXXXXXXX" 
                   data-testid="link-phone"
                   className="text-muted-foreground hover:text-primary transition-colors text-xs sm:text-sm hover-elevate"
+                  rel="noopener noreferrer"
                 >
                   +971 XX XXX XXXX
                 </a>
@@ -159,7 +165,7 @@ export default function Footer({ language }: FooterProps) {
                   {language === 'en' ? 'Dubai, UAE' : 'دبي، الإمارات'}
                 </span>
               </li>
-            </ul>
+            </address>
           </div>
         </div>
 
