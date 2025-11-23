@@ -22,11 +22,11 @@ const MODEL = 'llama-3.1-8b-instant';
 
 const getSystemPrompt = (language: Language): string => {
   const prompts = {
-    en: `You are a helpful AI assistant for Haditra, a technology and creative solutions provider based in the UAE.
+    en: `You are a helpful AI assistant for Heditra, a technology and creative solutions provider based in the UAE.
 
 Company Information:
 - Services: Software Engineering (ERP, HRMS, Payment Systems, E-Commerce), AI & Technologies (Machine Learning, IoT, Smart Systems), Creative Studio (Photography, Video Production, 3D Animation)
-- Contact: Email info@haditra.com, Phone +971 XX XXX XXXX, Location Dubai, UAE
+- Contact: Email info@Heditra.com, Phone +971 XX XXX XXXX, Location Dubai, UAE
 - Portfolio: Available on the website homepage
 
 Guidelines:
@@ -40,7 +40,7 @@ Guidelines:
 
 معلومات الشركة:
 - الخدمات: هندسة البرمجيات (أنظمة تخطيط الموارد، الموارد البشرية، أنظمة الدفع، التجارة الإلكترونية)، الذكاء الاصطناعي والتقنيات (التعلم الآلي، إنترنت الأشياء، الأنظمة الذكية)، الاستوديو الإبداعي (التصوير، إنتاج الفيديو، الرسوم المتحركة ثلاثية الأبعاد)
-- الاتصال: البريد الإلكتروني info@haditra.com، الهاتف +971 XX XXX XXXX، الموقع دبي، الإمارات العربية المتحدة
+- الاتصال: البريد الإلكتروني info@Heditra.com، الهاتف +971 XX XXX XXXX، الموقع دبي، الإمارات العربية المتحدة
 - معرض الأعمال: متاح على الصفحة الرئيسية للموقع
 
 الإرشادات:
@@ -60,13 +60,13 @@ const getFallbackResponse = (message: string, language: Language): string => {
   const responses: Record<Language, Record<string, string>> = {
     en: {
       'hello': 'Hi! 👋 How can I help you today?',
-      'hi': 'Hello! 👋 Welcome to Haditra. How can I assist you?',
+      'hi': 'Hello! 👋 Welcome to Heditra. How can I assist you?',
       'service': 'We offer three main services:\n\n1. **Software Engineering** - ERP, HRMS, Payment Systems & E-Commerce\n2. **AI & Technologies** - Machine Learning, IoT, Smart Systems\n3. **Creative Studio** - Photography, Video Production, 3D Animation\n\nWhich one interests you?',
       'services': 'We offer three main services:\n\n1. **Software Engineering** - ERP, HRMS, Payment Systems & E-Commerce\n2. **AI & Technologies** - Machine Learning, IoT, Smart Systems\n3. **Creative Studio** - Photography, Video Production, 3D Animation\n\nWhich one interests you?',
-      'price': 'For pricing information, please contact us through our contact form or email us at info@haditra.com. We provide customized quotes based on your specific needs.',
-      'contact': 'You can reach us through:\n\n📧 Email: info@haditra.com\n📞 Phone: +971 XX XXX XXXX\n📍 Location: Dubai, UAE\n\nOr fill out our contact form on the website!',
+      'price': 'For pricing information, please contact us through our contact form or email us at info@Heditra.com. We provide customized quotes based on your specific needs.',
+      'contact': 'You can reach us through:\n\n📧 Email: info@Heditra.com\n📞 Phone: +971 XX XXX XXXX\n📍 Location: Dubai, UAE\n\nOr fill out our contact form on the website!',
       'portfolio': 'You can view our portfolio by scrolling down to the "Portfolio" section on our homepage. We showcase our latest projects across different industries.',
-      'about': 'Haditra is a technology and creative solutions provider based in the UAE. We specialize in software engineering, AI technologies, and creative studio services.',
+      'about': 'Heditra is a technology and creative solutions provider based in the UAE. We specialize in software engineering, AI technologies, and creative studio services.',
       'default': 'I\'m here to help! You can ask me about:\n\n• Our services\n• Pricing\n• Contact information\n• Portfolio\n• About us\n\nWhat would you like to know?'
     },
     ar: {
@@ -74,8 +74,8 @@ const getFallbackResponse = (message: string, language: Language): string => {
       'السلام': 'السلام عليكم! 👋 مرحباً بك في هادترا. كيف يمكنني مساعدتك؟',
       'خدمة': 'نقدم ثلاث خدمات رئيسية:\n\n1. **هندسة البرمجيات** - أنظمة تخطيط الموارد، الموارد البشرية، أنظمة الدفع والتجارة الإلكترونية\n2. **الذكاء الاصطناعي والتقنيات** - التعلم الآلي، إنترنت الأشياء، الأنظمة الذكية\n3. **الاستوديو الإبداعي** - التصوير، إنتاج الفيديو، الرسوم المتحركة ثلاثية الأبعاد\n\nأي منها يهمك؟',
       'خدمات': 'نقدم ثلاث خدمات رئيسية:\n\n1. **هندسة البرمجيات** - أنظمة تخطيط الموارد، الموارد البشرية، أنظمة الدفع والتجارة الإلكترونية\n2. **الذكاء الاصطناعي والتقنيات** - التعلم الآلي، إنترنت الأشياء، الأنظمة الذكية\n3. **الاستوديو الإبداعي** - التصوير، إنتاج الفيديو، الرسوم المتحركة ثلاثية الأبعاد\n\nأي منها يهمك؟',
-      'سعر': 'للحصول على معلومات الأسعار، يرجى التواصل معنا من خلال نموذج الاتصال أو البريد الإلكتروني info@haditra.com. نقدم عروض أسعار مخصصة حسب احتياجاتك.',
-      'اتصال': 'يمكنك التواصل معنا من خلال:\n\n📧 البريد الإلكتروني: info@haditra.com\n📞 الهاتف: +971 XX XXX XXXX\n📍 الموقع: دبي، الإمارات العربية المتحدة\n\nأو املأ نموذج الاتصال على موقعنا!',
+      'سعر': 'للحصول على معلومات الأسعار، يرجى التواصل معنا من خلال نموذج الاتصال أو البريد الإلكتروني info@Heditra.com. نقدم عروض أسعار مخصصة حسب احتياجاتك.',
+      'اتصال': 'يمكنك التواصل معنا من خلال:\n\n📧 البريد الإلكتروني: info@Heditra.com\n📞 الهاتف: +971 XX XXX XXXX\n📍 الموقع: دبي، الإمارات العربية المتحدة\n\nأو املأ نموذج الاتصال على موقعنا!',
       'معرض': 'يمكنك عرض معرض أعمالنا عن طريق التمرير لأسفل إلى قسم "معرض الأعمال" على الصفحة الرئيسية. نعرض أحدث مشاريعنا عبر مختلف الصناعات.',
       'من نحن': 'هادترا هي مزود حلول تقنية وإبداعية مقرها في الإمارات العربية المتحدة. نتخصص في هندسة البرمجيات وتقنيات الذكاء الاصطناعي وخدمات الاستوديو الإبداعي.',
       'default': 'أنا هنا للمساعدة! يمكنك أن تسألني عن:\n\n• خدماتنا\n• الأسعار\n• معلومات الاتصال\n• معرض الأعمال\n• من نحن\n\nماذا تريد أن تعرف؟'

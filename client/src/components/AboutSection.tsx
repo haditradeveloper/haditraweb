@@ -12,7 +12,7 @@ export default function AboutSection({ language }: AboutSectionProps) {
     en: {
       subtitle: 'About Us',
       title: 'Transforming Ideas Into Reality',
-      description: 'Founded in 2020, Haditra has grown into a leading technology and creative solutions provider. We combine technical excellence with creative innovation to deliver exceptional results for our clients across the UAE and beyond.',
+      description: 'Founded in 2020, Heditra has grown into a leading technology and creative solutions provider. We combine technical excellence with creative innovation to deliver exceptional results for our clients across the UAE and beyond.',
       mission: {
         title: 'Our Mission',
         text: 'To empower businesses with cutting-edge technology and creative solutions that drive growth, efficiency, and innovation.'

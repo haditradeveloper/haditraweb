@@ -35,7 +35,7 @@ export default function ContactSection({ language }: ContactSectionProps) {
         sending: 'Sending...'
       },
       contact: {
-        email: 'info@haditra.com',
+        email: 'info@Heditra.com',
         phone: '+971 XX XXX XXXX',
         location: 'Dubai, UAE'
       },
@@ -55,7 +55,7 @@ export default function ContactSection({ language }: ContactSectionProps) {
         sending: 'جاري الإرسال...'
       },
       contact: {
-        email: 'info@haditra.com',
+        email: 'info@Heditra.com',
         phone: '+971 XX XXX XXXX',
         location: 'دبي، الإمارات'
       },

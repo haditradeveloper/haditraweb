@@ -1,5 +1,7 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { type Language } from '@/lib/i18n';
+import Logo from '@/components/Logo';
 
 interface FooterProps {
   language: Language;
@@ -21,7 +23,7 @@ export default function Footer({ language }: FooterProps) {
 
   const content = {
     en: {
-      brand: 'Haditra',
+      brand: 'Heditra',
       tagline: 'Technology & Creative Excellence',
       description: 'Delivering exceptional digital solutions that exceed expectations and drive meaningful results.',
       quickLinks: 'Quick Links',
@@ -75,13 +77,20 @@ export default function Footer({ language }: FooterProps) {
       <div className="max-w-7xl mx-auto px-6 lg:px-16 py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-none bg-primary flex items-center justify-center border border-primary/50">
-                <span className="text-primary-foreground font-semibold text-xl">H</span>
-              </div>
-              <div>
-                <h3 className="font-semibold text-xl">{c.brand}</h3>
-                <p className="text-foreground/60 text-xs">{c.tagline}</p>
+            <div className="flex items-start gap-4 mb-4">
+              <Logo 
+                size="xl" 
+                showGlow={false}
+                onClick={() => scrollToSection('home')}
+                className="flex-shrink-0 mt-1"
+              />
+              <div className="flex-1">
+                <h3 className="text-foreground font-semibold text-xl lg:text-2xl tracking-normal mb-1.5 leading-none">
+                  HEDITRA
+                </h3>
+                <p className="text-muted-foreground text-[10px] lg:text-xs font-normal mb-2 tracking-[0.2em] uppercase">
+                  Technologies & Creative Design
+                </p>
               </div>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">{c.description}</p>
@@ -93,11 +102,11 @@ export default function Footer({ language }: FooterProps) {
               {c.links.map((link, index) => (
                 <li key={index}>
                   <button
-                    data-testid={`link-footer-${typeof link === 'string' ? link.toLowerCase() : link.id}`}
+                    data-testid={`link-footer-${link.id}`}
                     className="text-muted-foreground hover:text-primary transition-colors text-sm hover-elevate px-2 py-1 rounded-none -ml-2"
-                    onClick={() => scrollToSection(typeof link === 'string' ? link.toLowerCase() : link.id)}
+                    onClick={() => scrollToSection(link.id)}
                   >
-                    {typeof link === 'string' ? link : link.label}
+                    {link.label}
                   </button>
                 </li>
               ))}
@@ -127,11 +136,11 @@ export default function Footer({ language }: FooterProps) {
                 <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <a 
-                  href="mailto:info@haditra.com" 
+                  href="mailto:info@Heditra.com" 
                   data-testid="link-email"
                   className="text-muted-foreground hover:text-primary transition-colors text-sm hover-elevate"
                 >
-                  info@haditra.com
+                  info@Heditra.com
                 </a>
               </li>
               <li className="flex items-start gap-3">

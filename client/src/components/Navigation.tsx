@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { type Language } from '@/lib/i18n';
+import Logo from '@/components/Logo';
 
 interface NavigationProps {
   language: Language;
@@ -31,7 +32,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 56; // Navigation height
+      const offset = 48; // Navigation height
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -44,26 +45,40 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-      <div className="max-w-7xl mx-auto px-3 lg:px-6">
-        <div className="flex items-center justify-between h-14">
-          <button 
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/50 backdrop-blur-lg border-b border-border">
+      <div className="max-w-7xl mx-auto pl-0 pr-8 lg:pl-0 lg:pr-16">
+        <div className="flex items-center justify-between h-12">
+          <motion.button
             onClick={() => scrollToSection('home')}
-            className="flex items-center gap-1.5 hover-elevate rounded-none px-1.5 py-0.5"
+            className="flex items-center gap-3 hover-elevate rounded-none px-0 py-1.5 -ml-6 lg:-ml-8 group relative"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <div className="w-7 h-7 rounded-none bg-primary flex items-center justify-center border border-primary/50">
-              <span className="text-primary-foreground font-bold text-sm">H</span>
-            </div>
-            <span className="text-foreground font-semibold text-base">Haditra</span>
-          </button>
+            {/* Logo - simple and clean */}
+            <Logo 
+              size="lg" 
+              showGlow={false}
+              className="flex-shrink-0"
+            />
 
-          <div className="flex items-center gap-4">
+            {/* Company name - simple and clean */}
+            <div className="flex flex-col items-start">
+              <span className="text-foreground font-semibold text-base lg:text-lg leading-none tracking-normal">
+                HEDITRA
+              </span>
+              <span className="text-muted-foreground text-[7px] lg:text-[8px] leading-tight tracking-[0.2em] uppercase hidden sm:block mt-0.5 font-normal">
+                Technologies & Creative Design
+              </span>
+            </div>
+          </motion.button>
+
+          <div className="flex items-center gap-4 -mr-40">
             <div className="hidden lg:flex items-center gap-4">
               {navItems.map((item, index) => (
                 <button
                   key={index}
                   data-testid={`link-nav-${item.label.toLowerCase()}`}
-                  className="text-foreground/80 hover:text-foreground transition-colors text-sm font-medium hover-elevate px-2 py-1 rounded-md"
+                  className="text-foreground/80 hover:text-foreground transition-colors text-xs font-medium hover-elevate px-2 py-1 rounded-md"
                   onClick={() => scrollToSection(item.id)}
                 >
                   {item.label}
@@ -100,7 +115,7 @@ export default function Navigation({ language, onLanguageChange }: NavigationPro
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-background/95 backdrop-blur-lg border-t border-border"
+            className="lg:hidden bg-background/70 backdrop-blur-lg border-t border-border"
           >
             <div className="px-6 py-6 space-y-4">
               {navItems.map((item, index) => (

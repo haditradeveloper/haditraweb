@@ -15,6 +15,8 @@ interface HeroSliderProps {
   onOpenChatbot?: () => void;
 }
 
+const NAVIGATION_OFFSET = 48; // Navigation bar height
+
 const slides = [
   { id: 1, image: slide1, key: 'slide1' },
   { id: 2, image: slide2, key: 'slide2' },
@@ -44,7 +46,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
     en: [
       {
         category: "SOFTWARE ENGINEERING EXCELLENCE",
-        title: "Transform Your Vision",
+        title: "Technology & Creative Excellence",
         subtitle: "Into Digital Reality",
         description: "Enterprise-grade software solutions including ERP, HRMS, Payment Systems & E-Commerce Platforms"
       },
@@ -119,6 +121,18 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
   };
 
   const content = slideContent[language][currentIndex];
+
+  const scrollToSection = useCallback((id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - NAVIGATION_OFFSET;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
 
   return (
     <section 
@@ -225,18 +239,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                     size="lg"
                     data-testid="button-hero-primary"
                     className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-sm font-medium rounded-none transition-colors duration-200 group"
-                    onClick={() => {
-                      const element = document.getElementById('portfolio');
-                      if (element) {
-                        const offset = 56;
-                        const elementPosition = element.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - offset;
-                        window.scrollTo({
-                          top: offsetPosition,
-                          behavior: 'smooth'
-                        });
-                      }
-                    }}
+                    onClick={() => scrollToSection('portfolio')}
                   >
                     <span className="flex items-center gap-2">
                       {language === 'en' ? 'View Our Work' : 'شاهد أعمالنا'}
@@ -268,7 +271,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
 
       {/* Right Sidebar - Services & CTA Only */}
       <motion.div 
-        className="w-full lg:w-1/4 bg-background/95 backdrop-blur-sm border-l border-border p-10 flex flex-col justify-between relative z-20 overflow-hidden"
+        className="w-full lg:w-1/4 bg-background/95 backdrop-blur-sm border-l border-border px-10 pt-20 pb-10 flex flex-col justify-between relative z-20 overflow-hidden"
         initial={{ opacity: 0, x: 50, scale: 0.95 }}
         animate={{ opacity: 1, x: 0, scale: 1 }}
         transition={{ 
@@ -279,31 +282,111 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           damping: 15
         }}
       >
-        {/* Animated background gradient */}
+        {/* Animated background gradients - Multiple layers for depth */}
+        {/* Primary gradient layer with rotation */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5"
-          initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: [0, 0.3, 0.2, 0.3],
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(251, 191, 36, 0.1) 50%, rgba(59, 130, 246, 0.15) 100%)',
+          }}
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.4, 0.2],
           }}
           transition={{
-            duration: 4,
+            rotate: {
+              duration: 20,
+              repeat: Infinity,
+              ease: 'linear',
+            },
+            scale: {
+              duration: 8,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            },
+            opacity: {
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            },
+          }}
+        />
+
+        {/* Secondary gradient layer with pulsing effect */}
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(circle at 30% 70%, rgba(16, 185, 129, 0.2), rgba(251, 191, 36, 0.15), transparent 60%)',
+          }}
+          animate={{
+            x: [0, 30, -30, 0],
+            y: [0, -20, 20, 0],
+            scale: [1, 1.2, 0.9, 1],
+            opacity: [0.15, 0.3, 0.2, 0.15],
+          }}
+          transition={{
+            duration: 10,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
+          }}
+        />
+
+        {/* Tertiary gradient layer with wave effect */}
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            transformOrigin: 'center center',
+            background: 'linear-gradient(54.46deg, transparent 0%, rgba(58, 133, 241, 0.1) 25%, rgba(230, 76, 159, 0.1) 50%, rgba(56, 181, 130, 0.1) 75%, transparent 100%)',
+          }}
+          animate={{
+            rotate: [0, 360],
+            opacity: [0.1, 0.25, 0.1],
+          }}
+          transition={{
+            rotate: {
+              duration: 20,
+              repeat: Infinity,
+              ease: 'linear',
+            },
+            opacity: {
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            },
+          }}
+        />
+
+        {/* Accent gradient overlay with shimmer */}
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.15) 50%, transparent 100%)',
+          }}
+          animate={{
+            x: ['-100%', '200%'],
+            opacity: [0, 0.3, 0],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            repeatDelay: 2,
           }}
         />
 
         {/* Services List */}
-        <div className="relative z-10">
+        <div className="relative z-10 text-left">
           <motion.h3 
             className="text-foreground font-medium mb-6 text-xs uppercase tracking-wider text-muted-foreground relative"
             initial={{ opacity: 0, y: -20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ 
-              delay: 0.5, 
-              duration: 0.6,
+              delay: 0.1, 
+              duration: 0.3,
               type: "spring",
-              stiffness: 200
+              stiffness: 300,
+              damping: 20
             }}
           >
             {language === 'en' ? 'Services' : 'الخدمات'}
@@ -311,40 +394,22 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
               className="absolute bottom-0 left-0 h-0.5 bg-primary"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
-              transition={{ delay: 0.8, duration: 0.5, ease: "easeOut" }}
+              transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
             />
           </motion.h3>
-          <ul className="space-y-3">
-            {services[language].slice(0, 4).map((service, index) => {
-              const scrollToSection = (id: string) => {
-                const element = document.getElementById(id);
-                if (element) {
-                  const offset = 56;
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - offset;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              };
-              
-              const handleServiceClick = () => {
-                scrollToSection('services');
-              };
-              
-              return (
+          <ul className="space-y-3 mt-2">
+            {services[language].slice(0, 4).map((service, index) => (
                 <motion.li 
                   key={index} 
-                  className="relative text-muted-foreground text-sm cursor-pointer group"
+                  className="relative text-muted-foreground text-sm cursor-pointer group text-left"
                   initial={{ opacity: 0, x: -30, scale: 0.9 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   transition={{ 
-                    delay: 0.6 + (index * 0.15),
-                    duration: 0.5,
+                    delay: 0.15 + (index * 0.05),
+                    duration: 0.25,
                     type: "spring",
-                    stiffness: 150,
-                    damping: 12
+                    stiffness: 300,
+                    damping: 20
                   }}
                   whileHover={{ 
                     x: 8,
@@ -352,7 +417,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                     color: "hsl(var(--primary))"
                   }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={handleServiceClick}
+                  onClick={() => scrollToSection('services')}
                 >
                   <span className="relative z-10 block transition-colors duration-200">
                     {service}
@@ -370,8 +435,7 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
                     transition={{ duration: 0.2 }}
                   />
                 </motion.li>
-              );
-            })}
+            ))}
           </ul>
         </div>
 
@@ -381,11 +445,11 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
           initial={{ opacity: 0, y: 30, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ 
-            delay: 1, 
-            duration: 0.7,
+            delay: 0.3, 
+            duration: 0.3,
             type: "spring",
-            stiffness: 120,
-            damping: 15
+            stiffness: 300,
+            damping: 20
           }}
         >
           <motion.div
@@ -423,8 +487,8 @@ export default function HeroSlider({ language, onOpenChatbot }: HeroSliderProps)
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
-              delay: 1.3, 
-              duration: 0.6,
+              delay: 0.4, 
+              duration: 0.3,
               ease: "easeOut"
             }}
           >

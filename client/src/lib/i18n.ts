@@ -13,7 +13,7 @@ export const translations = {
     hero: {
       slide1: {
         category: "SOFTWARE ENGINEERING EXCELLENCE",
-        title: "Transform Your Vision",
+        title: "Technology & Creative Excellence",
         subtitle: "Into Digital Reality",
         description: "Enterprise-grade software solutions including ERP, HRMS, Payment Systems & E-Commerce Platforms",
         primaryCTA: "View Our Work",
@@ -79,13 +79,13 @@ export const translations = {
       secondaryButton: "Explore Services"
     },
     footer: {
-      brand: "Haditra",
+      brand: "Heditra",
       tagline: "Technology & Creative Excellence",
       description: "Delivering exceptional digital solutions that exceed expectations and drive meaningful results.",
       quickLinks: "Quick Links",
       services: "Services",
       contact: "Contact",
-      email: "info@haditra.com",
+      email: "info@Heditra.com",
       phone: "+971 XX XXX XXXX",
       location: "Dubai, UAE",
       copyright: "All rights reserved.",
@@ -179,7 +179,7 @@ export const translations = {
       quickLinks: "روابط سريعة",
       services: "الخدمات",
       contact: "اتصل",
-      email: "info@haditra.com",
+      email: "info@Heditra.com",
       phone: "+971 XX XXX XXXX",
       location: "دبي، الإمارات",
       copyright: "جميع الحقوق محفوظة.",
